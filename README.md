@@ -15,5 +15,5 @@ Welcome to ***Princess Suvin with 6 Dwarfs's github!***
 <br>
 We will make ***RomantincChuncheon*** **APP**!
 <br>
-Laewon! Update ***README.md*** please. Thank you❤
+Seungmin! Update ***README.md*** please. Thank you❤
 <br>
