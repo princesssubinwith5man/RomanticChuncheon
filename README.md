@@ -17,3 +17,4 @@ We will make ***RomantincChuncheon*** **APP**!
 <br>
 Seungmin! Update ***README.md*** please. Thank you❤
 <br>
+I'm love Yisak  -Seungmin
