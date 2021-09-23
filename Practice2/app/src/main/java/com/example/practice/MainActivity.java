@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
     // 자기 것만 건드리세요!!
+    // 버튼을 눌렀을 때 toast를 이용해 학번과 이름이 뜨게 하기
     public void jeonghyeop(View view) {
     }
 
