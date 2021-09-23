@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void yisak(View view) {
+        Toast.makeText(getApplicationContext(), "이삭 ㅎㅇ", Toast.LENGTH_LONG).show();
     }
 
     public void subin(View view) {
