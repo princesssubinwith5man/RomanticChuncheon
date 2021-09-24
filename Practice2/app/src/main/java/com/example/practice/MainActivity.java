@@ -16,9 +16,11 @@ public class MainActivity extends AppCompatActivity {
     // 자기 것만 건드리세요!!
     // 버튼을 눌렀을 때 toast를 이용해 학번과 이름이 뜨게 하기
     public void jeonghyeop(View view) {
+        Toast.makeText(getApplicationContext(), "정협정협", Toast.LENGTH_LONG).show();
     }
 
     public void seungmin(View view) {
+        Toast.makeText(getApplicationContext(), "201714225 이승민", Toast.LENGTH_LONG).show();
     }
 
     public void yisak(View view) {
@@ -30,9 +32,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void bongkyu(View view) {
+        Toast.makeText(getApplicationContext(), "춘천의 자랑 홍이삭 춘천의 자랑 홍이삭 춘천의 자랑 홍이삭 춘천의 자랑 홍이삭", Toast.LENGTH_LONG).show();
     }
 
     public void woojin(View view) {
+        Toast.makeText(getApplicationContext(), "응애 커밋해줘", Toast.LENGTH_LONG).show();
     }
 
     public void laewon(View view) {
