@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void seungmin(View view) {
+        Toast.makeText(getApplicationContext(), "201714225 이승민", Toast.LENGTH_LONG).show();
     }
 
     public void yisak(View view) {
