@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void woojin(View view) {
+        Toast.makeText(getApplicationContext(), "응애 커밋해줘", Toast.LENGTH_LONG).show();
     }
 
     public void laewon(View view) {
