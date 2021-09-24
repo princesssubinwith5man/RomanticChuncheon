@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void seungmin(View view) {
+        Toast.makeText(getApplicationContext(), "201714225 이승민", Toast.LENGTH_LONG).show();
     }
 
     public void yisak(View view) {
@@ -30,9 +31,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void bongkyu(View view) {
+        Toast.makeText(getApplicationContext(), "춘천의 자랑 홍이삭 춘천의 자랑 홍이삭 춘천의 자랑 홍이삭 춘천의 자랑 홍이삭", Toast.LENGTH_LONG).show();
     }
 
     public void woojin(View view) {
+        Toast.makeText(getApplicationContext(), "응애 커밋해줘", Toast.LENGTH_LONG).show();
     }
 
     public void laewon(View view) {
