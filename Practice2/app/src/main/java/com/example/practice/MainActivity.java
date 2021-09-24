@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     // 자기 것만 건드리세요!!
     // 버튼을 눌렀을 때 toast를 이용해 학번과 이름이 뜨게 하기
     public void jeonghyeop(View view) {
+        Toast.makeText(getApplicationContext(), "정협정협", Toast.LENGTH_LONG).show();
     }
 
     public void seungmin(View view) {
