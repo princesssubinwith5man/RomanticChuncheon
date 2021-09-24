@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void subin(View view) {
+        Toast.makeText(getApplicationContext(), "공주 등장", Toast.LENGTH_LONG).show();
     }
 
     public void bongkyu(View view) {
