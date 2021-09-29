@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "389218904653",
-    "project_id": "sw-project-53154",
-    "storage_bucket": "sw-project-53154.appspot.com"
+    "project_number": "804657004041",
+    "firebase_url": "https://princesssuvinand6dwarf-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "princesssuvinand6dwarf",
+    "storage_bucket": "princesssuvinand6dwarf.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:389218904653:android:d6335bbc62d55a27c70a04",
+        "mobilesdk_app_id": "1:804657004041:android:1ab0b2993967ef660d82d8",
         "android_client_info": {
           "package_name": "com.example.practice"
         }
       },
       "oauth_client": [
         {
-          "client_id": "389218904653-16cffa70vcvgmn4v1kdib589i5172qgb.apps.googleusercontent.com",
+          "client_id": "804657004041-krhdd50ntn4vqnavctbpjojneb3d4edk.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDS9J-IenuzW6_kVTXt3OZsgumU3JJJHp4"
+          "current_key": "AIzaSyAL0HSLG5hUdu49H742LauKt6ywfLc-mcM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "389218904653-16cffa70vcvgmn4v1kdib589i5172qgb.apps.googleusercontent.com",
+              "client_id": "804657004041-krhdd50ntn4vqnavctbpjojneb3d4edk.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
