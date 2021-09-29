@@ -1,16 +1,16 @@
 package com.example.practice;
 
-public class User {
+public class Shop {
     public String name;
     public String sector;
     public String telnum;
     public String address;
 
-    public User() {
+    public Shop() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public User(String name, String sector, String telnum, String address) {
+    public Shop(String name, String sector, String telnum, String address) {
         this.name = name;
         this.sector = sector;
         this.telnum = telnum;
