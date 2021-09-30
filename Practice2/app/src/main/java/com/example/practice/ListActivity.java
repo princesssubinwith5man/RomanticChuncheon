@@ -24,6 +24,7 @@ import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
     ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String, String>>();
+    ArrayList<HashMap<String, Shop>> shopList = new ArrayList<>();
     DatabaseReference mDatabase;
     static int cnt = 0;
     @Override
@@ -40,12 +41,18 @@ public class ListActivity extends AppCompatActivity {
 
         for(int i = 0;i<=40;i++) {
             String dong = Integer.toString(i);
+            HashMap<String, Shop> shopItem = new HashMap<>();
             mDatabase.child("춘천시").child(dong).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     // Get Post object and use the values to update the UI
                     for (DataSnapshot fileSnapshot : dataSnapshot.getChildren()) {
                         HashMap<String,String> item = new HashMap<String, String>();
+
+
+                        Shop shop = fileSnapshot.getValue(Shop.class);
+                        shopItem.put(shop.name, shop);
+
                         String address = fileSnapshot.child("address").getValue(String.class);
                         String name = fileSnapshot.child("name").getValue(String.class);
                         String sector = fileSnapshot.child("sector").getValue(String.class);
@@ -59,6 +66,7 @@ public class ListActivity extends AppCompatActivity {
                         String a = Integer.toString(cnt);
                         Log.i("TAG: Total Count ", a);
                     }
+                    shopList.add(shopItem);
                     PrintListView();
                 }
 
