@@ -25,6 +25,7 @@ import java.util.List;
 public class ListActivity extends AppCompatActivity {
     ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String, String>>();
     DatabaseReference mDatabase;
+    static int cnt = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +37,8 @@ public class ListActivity extends AppCompatActivity {
         GetData();
     }
     public void GetData(){
-        for(int i = 1;i<=40;i++) {
+
+        for(int i = 0;i<=40;i++) {
             String dong = Integer.toString(i);
             mDatabase.child("춘천시").child(dong).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -47,12 +49,15 @@ public class ListActivity extends AppCompatActivity {
                         String address = fileSnapshot.child("address").getValue(String.class);
                         String name = fileSnapshot.child("name").getValue(String.class);
                         String sector = fileSnapshot.child("sector").getValue(String.class);
-                        if (sector.equals("숙박 및 음식점")) {
+                        //if (sector.equals("숙박 및 음식점")) {
                             Log.i("TAG: value is ", name + " : " + address);
                             item.put("item1",name);
                             item.put("item2",address);
                             list.add(item);
-                        }
+                        //}
+                        cnt++;
+                        String a = Integer.toString(cnt);
+                        Log.i("TAG: Total Count ", a);
                     }
                     PrintListView();
                 }
@@ -62,10 +67,8 @@ public class ListActivity extends AppCompatActivity {
                     // Getting Post failed, log a message
                     Log.w("FireBaseData", "loadPost:onCancelled", databaseError.toException());
                 }
-
             });
         }
-
     }
     private void PrintListView() {
         ListView listView =(ListView)findViewById(R.id.list);
