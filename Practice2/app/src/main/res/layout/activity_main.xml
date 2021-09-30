@@ -96,7 +96,7 @@
         android:layout_marginBottom="300dp"
         android:backgroundTint="#66CDAA"
         android:onClick="laewon"
-        android:text="숙박 및 편의점"
+        android:text="숙박 및 음식점"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

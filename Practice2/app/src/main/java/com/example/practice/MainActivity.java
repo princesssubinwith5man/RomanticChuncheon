@@ -28,10 +28,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+       /* FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
         DatabaseReference mDatabase;
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference();*/
         /*
         mDatabase.child("춘천시").child("1").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });*/
-        mDatabase.child("춘천시").child("23").addValueEventListener(new ValueEventListener() {
+        /*mDatabase.child("춘천시").child("23").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
@@ -59,18 +59,15 @@ public class MainActivity extends AppCompatActivity {
                     String sector = fileSnapshot.child("sector").getValue(String.class);
                     if(sector.equals("슈퍼/편의점"))
                         Log.i("TAG: value is ", name + " : " +str);
-
                 }
-
             }
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Getting Post failed, log a message
                 Log.w("FireBaseData", "loadPost:onCancelled", databaseError.toException());
             }
-        });
+        });*/
         /*
         mDatabase.child("춘천시").child("1").addValueEventListener(new ValueEventListener() {
             @Override
@@ -92,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         });
         */
 
-        myRef.setValue("Hello, World!");
+        //myRef.setValue("Hello, World!");
     }
     // 자기 것만 건드리세요!!
     // 버튼을 눌렀을 때 toast를 이용해 학번과 이름이 뜨게 하기
