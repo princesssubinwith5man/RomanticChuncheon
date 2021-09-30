@@ -1,10 +1,13 @@
 package com.example.practice;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,8 +16,10 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference myRef = database.getReference("message");
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        mDatabase.child("춘천시").child("2").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        /*
+        mDatabase.child("춘천시").child("1").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -36,10 +41,34 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("firebase", "Error getting data", task.getException());
                 }
                 else {
+
                     Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                    Map<String, Shop> map = task.getResult().getValue(List<Shop>);
                     int a;
                 }
+            }
+        });*/
+        mDatabase.child("춘천시").child("23").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                for (DataSnapshot fileSnapshot : dataSnapshot.getChildren()) {
+                    //MyFiles filename = (MyFiles) fileSnapshot.getValue(MyFiles.class);
+                    //하위키들의 value를 어떻게 가져오느냐???
+                    String str = fileSnapshot.child("address").getValue(String.class);
+                    String name = fileSnapshot.child("name").getValue(String.class);
+                    String sector = fileSnapshot.child("sector").getValue(String.class);
+                    if(sector.equals("슈퍼/편의점"))
+                        Log.i("TAG: value is ", name + " : " +str);
+
+                }
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w("FireBaseData", "loadPost:onCancelled", databaseError.toException());
             }
         });
         /*
@@ -93,5 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void laewon(View view) {
         Toast.makeText(getApplicationContext(),"201714198 정래원", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(MainActivity.this, ListActivity.class);
+        startActivity(intent);
     }
 }
