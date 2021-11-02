@@ -48,7 +48,7 @@ public class ListActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        
+
         listview = (ListView) findViewById(R.id.list);
         GetData();
     }
