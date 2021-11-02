@@ -8,5 +8,8 @@
 
     <ListView android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:fastScrollEnabled="true"
+        android:dividerHeight="0px"
+        android:divider="#FFFFFF" />
 </LinearLayout>

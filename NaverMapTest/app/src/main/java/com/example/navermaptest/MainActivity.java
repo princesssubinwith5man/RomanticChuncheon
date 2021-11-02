@@ -47,19 +47,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void button1(View view) {
-        String str = "강원도 춘천시 서부대성로 245 (효자동)";
+        String str = "강원도 춘천시 서부대성로 245 (효자동)"; //쿼드 강원대점 주소
         new Thread(){
             @Override
             public void run(){
                 Location a = addToPoint(str);
-                Log.d("test",a.getLatitude() +" " + a.getLongitude());
+                Log.d("test",str + " 위도: "+a.getLatitude() +", 경도: " + a.getLongitude());
             }
         }.start();
     }
 
     public Location addToPoint(String str){
-        Location location = new Location("");
-        Geocoder geocoder = new Geocoder(this);
+        Location location = new Location(""); //변환한 위도, 경도를 저장 할 location
+        Geocoder geocoder = new Geocoder(this); //객체 생성
         List<Address> addresses = null;
 
         try{

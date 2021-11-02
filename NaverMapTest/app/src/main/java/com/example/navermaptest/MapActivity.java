@@ -34,10 +34,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE|View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-            getWindow().setStatusBarColor(Color.TRANSPARENT); }
         mapView = findViewById(R.id.map_fragment);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -45,7 +41,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
-        Location location = addToPoint(this);
+        String address = "강원도 춘천시 춘천로204번길 26(효자동)"; //쿼드 주소
+        Location location = addToPoint(this,address);
         naverMap.setMapType(NaverMap.MapType.Navi); // 맵 타입 설정
         /*
         Basic: 일반 지도. 하천, 녹지, 도로, 심벌 등 다양한 정보를 노출
@@ -87,13 +84,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
         return false;
     }
-    public static Location addToPoint(Context context){ //주소를 위도,경도로 변환
+    public static Location addToPoint(Context context, String address){ //주소를 위도,경도로 변환
         Location location = new Location("");
         Geocoder geocoder = new Geocoder(context);
         List<Address> addresses = null;
 
         try{
-            addresses = geocoder.getFromLocationName("강원도 춘천시 춘천로204번길 26(효자동)",3);
+            addresses = geocoder.getFromLocationName(address,3);
         } catch(IOException e){
             e.printStackTrace();
         }

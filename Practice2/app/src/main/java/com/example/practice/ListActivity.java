@@ -2,11 +2,16 @@ package com.example.practice;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -21,24 +26,34 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+import static com.example.practice.R.layout.listview_custom;
 public class ListActivity extends AppCompatActivity {
     ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String, String>>();
     ArrayList<HashMap<String, Shop>> shopList = new ArrayList<>();
     DatabaseReference mDatabase;
+    ListView listview;
+    String address;
+    String name;
+    String sector;
+    String temp;
     static int cnt = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        Intent intent = getIntent();
+        temp = intent.getExtras().getString("sector");
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        
+        listview = (ListView) findViewById(R.id.list);
         GetData();
     }
     public void GetData(){
-
+        ListViewAdapter adapter = new ListViewAdapter();
         for(int i = 0;i<=40;i++) {
             String dong = Integer.toString(i);
             HashMap<String, Shop> shopItem = new HashMap<>();
@@ -48,26 +63,22 @@ public class ListActivity extends AppCompatActivity {
                     // Get Post object and use the values to update the UI
                     for (DataSnapshot fileSnapshot : dataSnapshot.getChildren()) {
                         HashMap<String,String> item = new HashMap<String, String>();
-
-
                         Shop shop = fileSnapshot.getValue(Shop.class);
                         shopItem.put(shop.name, shop);
-
-                        String address = fileSnapshot.child("address").getValue(String.class);
-                        String name = fileSnapshot.child("name").getValue(String.class);
-                        String sector = fileSnapshot.child("sector").getValue(String.class);
-                        //if (sector.equals("숙박 및 음식점")) {
-                            Log.i("TAG: value is ", name + " : " + address);
-                            item.put("item1",name);
-                            item.put("item2",address);
-                            list.add(item);
-                        //}
+                        address = fileSnapshot.child("address").getValue(String.class);
+                        name = fileSnapshot.child("name").getValue(String.class);
+                        sector = fileSnapshot.child("sector").getValue(String.class);
+                        Log.i("TAG: value is ", sector + " : " + temp);
+                        if (sector.equals(temp)) {
+                            Log.i("TAG: value is ", name + " : " + address+", "+sector);
+                            adapter.addItem(0,name,"0",address);
+                        }
                         cnt++;
                         String a = Integer.toString(cnt);
                         Log.i("TAG: Total Count ", a);
                     }
                     shopList.add(shopItem);
-                    PrintListView();
+                    listview.setAdapter(adapter);
                 }
 
                 @Override
@@ -77,10 +88,5 @@ public class ListActivity extends AppCompatActivity {
                 }
             });
         }
-    }
-    private void PrintListView() {
-        ListView listView =(ListView)findViewById(R.id.list);
-        SimpleAdapter adapter = new SimpleAdapter(this, list, android.R.layout.simple_list_item_2,new String[]{"item1","item2"}, new int[] {android.R.id.text1, android.R.id.text2});
-        listView.setAdapter(adapter);
     }
 }
