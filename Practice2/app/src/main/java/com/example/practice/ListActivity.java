@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -79,6 +80,20 @@ public class ListActivity extends AppCompatActivity {
                     }
                     shopList.add(shopItem);
                     listview.setAdapter(adapter);
+                    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            ListViewItem listViewItem = adapter.listViewItemList.get(i);
+                            String centerName = listViewItem.getCenterNameStr();
+                            String address = listViewItem.getAddressStr();
+                            //Toast.makeText(getApplicationContext(), "위도 : " + centerName, Toast.LENGTH_LONG).show();
+                            //Log.i("TAG: value is ", centerName + " : " + address);
+                            Intent intent = new Intent(ListActivity.this, InformationActivity.class);
+                            intent.putExtra("centername", centerName);
+                            intent.putExtra("add", address);
+                            startActivity(intent);
+                        }
+                    });
                 }
 
                 @Override

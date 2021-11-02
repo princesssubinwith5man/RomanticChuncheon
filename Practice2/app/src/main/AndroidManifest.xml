@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Practice">
         <activity
+            android:name=".InformationActivity"
+            android:exported="true" />
+        <activity
             android:name=".ListActivity"
             android:exported="true" />
         <activity
