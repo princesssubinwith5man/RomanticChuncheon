@@ -7,6 +7,7 @@ public class ListViewItem {
     private String Like;
     private String addressStr;
     private String CenterNameStr;
+    private String key;
     //final private double lat, lng;
 
     public void setCenterName(String title) {
@@ -24,6 +25,7 @@ public class ListViewItem {
     public void setAddress(String address) {
         addressStr = address;
     }
+    public void setKey(String key){this.key = key;}
 
     public int getIcon() {
         return this.iconDrawable;
@@ -41,4 +43,5 @@ public class ListViewItem {
     public String getAddressStr() {
         return this.addressStr;
     }
+    public String getKey() {return this.key;}
 }

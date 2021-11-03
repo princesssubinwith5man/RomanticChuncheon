@@ -61,12 +61,13 @@ public class ListViewAdapter extends BaseAdapter {
         return view;
     }
 
-    public void addItem(int icon, String centerName, String facName, String address){
+    public void addItem(int icon, String shopName, String like, String address, String key){
         ListViewItem item = new ListViewItem();
         item.setIcon(R.drawable.chuncheon);
-        item.setCenterName(centerName);
-        item.setLike(facName);
+        item.setCenterName(shopName);
+        item.setLike(like);
         item.setAddress(address);
+        item.setKey(key);
         listViewItemList.add(item);
     }
 

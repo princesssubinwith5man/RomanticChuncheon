@@ -38,9 +38,7 @@ public class ListActivity extends AppCompatActivity {
     ArrayList<HashMap<String, Shop>> shopList = new ArrayList<>();
     DatabaseReference mDatabase;
     ListView listview;
-    String address;
-    String name;
-    String sector;
+
     String temp;
     static int cnt = 0;
 
@@ -52,8 +50,6 @@ public class ListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         temp = intent.getExtras().getString("sector");
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         listview = (ListView) findViewById(R.id.list);
@@ -65,6 +61,7 @@ public class ListActivity extends AppCompatActivity {
         HashMap<String, Shop> shopItem = new HashMap<>();
 
         //mDatabase.child("춘천시").child(dong).orderByValue().equalTo(temp, "sector");
+        Query mQuery = mDatabase.child("shop").equalTo(temp, "sector");
         mDatabase.child("shop").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -74,14 +71,12 @@ public class ListActivity extends AppCompatActivity {
 
                     Shop shop = fileSnapshot.getValue(Shop.class);
                     shopItem.put(shop.name, shop);
-                    address = fileSnapshot.child("address").getValue(String.class);
-                    name = fileSnapshot.child("name").getValue(String.class);
-                    sector = fileSnapshot.child("sector").getValue(String.class);
-                    Log.i("TAG: value is ", name + sector + " : " + temp);
-                    if (name == null || name.isEmpty()) continue;
-                    if (sector.equals(temp)) {
-                        Log.i("TAG: value is ", name + " : " + address + ", " + sector);
-                        adapter.addItem(0, name, "0", address);
+
+                    Log.i("TAG: value is ", shop.name + shop.sector + " : " + temp);
+                    if (shop.name == null || shop.name.isEmpty()) continue;
+                    if (shop.sector.equals(temp)) {
+                        Log.i("TAG: value is ", shop.name + " : " + shop.address + ", " + shop.sector);
+                        adapter.addItem(0, shop.name,  Integer.toString(shop.like), shop.address, fileSnapshot.getKey());
                     }
                     cnt++;
                     //if(cnt > 20400)
@@ -97,11 +92,16 @@ public class ListActivity extends AppCompatActivity {
                         ListViewItem listViewItem = adapter.listViewItemList.get(i);
                         String centerName = listViewItem.getCenterNameStr();
                         String address = listViewItem.getAddressStr();
-                        //Toast.makeText(getApplicationContext(), "위도 : " + centerName, Toast.LENGTH_LONG).show();
+                        String key = listViewItem.getKey();
+                        String like = listViewItem.getLike();
+
+                        //Toastdd.makeText(getApplicationContext(), "위도 : " + centerName, Toast.LENGTH_LONG).show();
                         //Log.i("TAG: value is ", centerName + " : " + address);
                         Intent intent = new Intent(ListActivity.this, InformationActivity.class);
                         intent.putExtra("centername", centerName);
                         intent.putExtra("add", address);
+                        intent.putExtra("key", key);
+                        intent.putExtra("like", like);
                         startActivity(intent);
                     }
                 });
