@@ -78,9 +78,8 @@ public class ListActivity extends AppCompatActivity {
                         Log.i("TAG: value is ", shop.name + " : " + shop.address + ", " + shop.sector);
                         adapter.addItem(0, shop.name,  Integer.toString(shop.like), shop.address, fileSnapshot.getKey());
                     }
+
                     cnt++;
-                    //if(cnt > 20400)
-                    //    break;
                     String a = Integer.toString(cnt);
                     Log.i("TAG: Total Count ", a);
                 }
