@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,20 +18,34 @@ public class InformationActivity extends AppCompatActivity {
     String centername;
     String address;
     String key;
+    DatabaseReference mDatabase;
     int like;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information);
-        final TextView cn = (TextView)findViewById(R.id.name);
-        final TextView ad = (TextView)findViewById(R.id.name1);
-        TextView likeText = (TextView)findViewById(R.id.likkk);
+        final TextView cn = findViewById(R.id.name);
+        final TextView ad = findViewById(R.id.name1);
+        TextView likeText = findViewById(R.id.likkk);
 
         Intent intent = getIntent();
         centername = intent.getExtras().getString("centername");
         address = intent.getExtras().getString("add");
         like = Integer.parseInt(intent.getExtras().getString("like"));
         key = intent.getExtras().getString("key");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("shop").child(key);
+
+        mDatabase.child("like").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                likeText.setText(snapshot.getValue().toString());
+                like = Integer.parseInt(snapshot.getValue().toString());
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         cn.setText(centername);
         ad.setText(address);
@@ -43,20 +56,8 @@ public class InformationActivity extends AppCompatActivity {
         final TextView li = (TextView)findViewById(R.id.likkk);
 
 
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("shop").child(key).child("like").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                li.setText(snapshot.getValue().toString());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
         like++;
-        mDatabase.child("shop").child(key).child("like").setValue(like);
+        mDatabase.child("like").setValue(like);
     }
 
     public void map(View view) {
