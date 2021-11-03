@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.TextView;
 
 public class InformationActivity extends AppCompatActivity {
+    String centername;
+    String address;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,8 +18,8 @@ public class InformationActivity extends AppCompatActivity {
         final TextView cn = (TextView)findViewById(R.id.name);
         final TextView ad = (TextView)findViewById(R.id.name1);
         Intent intent = getIntent();
-        String centername = intent.getExtras().getString("centername");
-        String address = intent.getExtras().getString("add");
+        centername = intent.getExtras().getString("centername");
+        address = intent.getExtras().getString("add");
         cn.setText(centername);
         ad.setText(address);
     }
@@ -28,5 +30,12 @@ public class InformationActivity extends AppCompatActivity {
         int num = Integer.parseInt(a)+1;
         String result = Integer.toString(num);
         li.setText(result);
+    }
+
+    public void map(View view) {
+        Intent intent = new Intent(InformationActivity.this, MapActivity.class);
+        intent.putExtra("centername", centername);
+        intent.putExtra("add", address);
+        startActivity(intent);
     }
 }
