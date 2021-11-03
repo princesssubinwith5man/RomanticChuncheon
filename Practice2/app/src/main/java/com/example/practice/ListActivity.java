@@ -69,7 +69,8 @@ public class ListActivity extends AppCompatActivity {
                         address = fileSnapshot.child("address").getValue(String.class);
                         name = fileSnapshot.child("name").getValue(String.class);
                         sector = fileSnapshot.child("sector").getValue(String.class);
-                        Log.i("TAG: value is ", sector + " : " + temp);
+                        Log.i("TAG: value is ", name + sector + " : " + temp);
+                        if(name==null || name.isEmpty())continue;
                         if (sector.equals(temp)) {
                             Log.i("TAG: value is ", name + " : " + address+", "+sector);
                             adapter.addItem(0,name,"0",address);

@@ -5,16 +5,18 @@ public class Shop {
     public String sector;
     public String telnum;
     public String address;
+    public int like;
 
     public Shop() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Shop(String name, String sector, String telnum, String address) {
+    public Shop(String name, String sector, String telnum, String address, int like) {
         this.name = name;
         this.sector = sector;
         this.telnum = telnum;
         this.address = address;
+        this.like = like;
     }
 
     public String getName() {
@@ -40,6 +42,7 @@ public class Shop {
                 ", sector='" + sector + '\'' +
                 ", telnum='" + telnum + '\'' +
                 ", address='" + address + '\'' +
+                ", like='" + like + '\'' +
                 '}';
     }
 }
