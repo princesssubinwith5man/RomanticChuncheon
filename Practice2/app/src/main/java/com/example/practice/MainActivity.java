@@ -1,158 +1,111 @@
 package com.example.practice;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
-
+    RelativeLayout rellay1, rellay2;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener firebaseAuthListener;
+    private EditText editTextEmail;
+    private EditText editTextPassword;
+    private Button buttonLogIn;
+    private Button buttonSignUp;
+    Handler handler = new Handler();
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            rellay1.setVisibility(View.VISIBLE);
+            rellay2.setVisibility(View.VISIBLE);
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-       /* FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-        DatabaseReference mDatabase;
-        mDatabase = FirebaseDatabase.getInstance().getReference();*/
-        /*
-        mDatabase.child("춘천시").child("1").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        setContentView(R.layout.activity_home);
 
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
+        rellay1 = (RelativeLayout)findViewById(R.id.rellay1);
+        rellay2 = (RelativeLayout) findViewById(R.id.rellay2);
+        handler.postDelayed(runnable, 2000);
+        firebaseAuth = FirebaseAuth.getInstance();
 
-                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                    int a;
-                }
-            }
-        });*/
-        /*mDatabase.child("춘천시").child("23").addValueEventListener(new ValueEventListener() {
+        editTextEmail = (EditText) findViewById(R.id.edittext_email);
+        editTextPassword = (EditText) findViewById(R.id.edittext_password);
+        buttonLogIn = (Button) findViewById(R.id.btn_login);
+        buttonLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                for (DataSnapshot fileSnapshot : dataSnapshot.getChildren()) {
-                    //MyFiles filename = (MyFiles) fileSnapshot.getValue(MyFiles.class);
-                    //하위키들의 value를 어떻게 가져오느냐???
-                    String str = fileSnapshot.child("address").getValue(String.class);
-                    String name = fileSnapshot.child("name").getValue(String.class);
-                    String sector = fileSnapshot.child("sector").getValue(String.class);
-                    if(sector.equals("슈퍼/편의점"))
-                        Log.i("TAG: value is ", name + " : " +str);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w("FireBaseData", "loadPost:onCancelled", databaseError.toException());
-            }
-        });*/
-        /*
-        mDatabase.child("춘천시").child("1").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                if(dataSnapshot.getValue(User.class) != null){
-                    User post = dataSnapshot.getValue(User.class);
-                    Log.w("FireBaseData", "getData" + post.toString());
+            public void onClick(View v) {
+                if (!editTextEmail.getText().toString().equals("") && !editTextPassword.getText().toString().equals("")) {
+                    loginUser(editTextEmail.getText().toString(), editTextPassword.getText().toString());
                 } else {
-                    Toast.makeText(MainActivity.this, "데이터 없음...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "계정과 비밀번호를 입력하세요.", Toast.LENGTH_LONG).show();
+                    Log.d("asdfsadf", "onClick: 계정과 비밀번호를 입력하세요");
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w("FireBaseData", "loadPost:onCancelled", databaseError.toException());
             }
         });
-        */
-
-        //myRef.setValue("Hello, World!");
+        firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                }
+            }
+        };
     }
-    // 자기 것만 건드리세요!!
-    // 버튼을 눌렀을 때 toast를 이용해 학번과 이름이 뜨게 하기
-    public void jeonghyeop(View view) {
-        Intent intent = new Intent(MainActivity.this, ListActivity.class);
-        intent.putExtra("sector","운수업");
-        startActivity(intent);
-    }
-
-    public void seungmin(View view) {
-        Intent intent = new Intent(MainActivity.this, ListActivity.class);
-        intent.putExtra("sector","슈퍼/편의점");
-        startActivity(intent);
-    }
-
-    public void yisak(View view) {
-        Intent intent = new Intent(MainActivity.this, ListActivity.class);
-        intent.putExtra("sector","주유소");
-        startActivity(intent);
-    }
-
-    public void subin(View view) {
-        Intent intent = new Intent(MainActivity.this, ListActivity.class);
-        intent.putExtra("sector","도매 및 소매업");
-        startActivity(intent);
-    }
-
-    public void bongkyu(View view) {
-        Intent intent = new Intent(MainActivity.this, ListActivity.class);
-        intent.putExtra("sector","제조업");
-        startActivity(intent);
+    public void loginUser(String email, String password) {
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // 로그인 성공
+                            Toast.makeText(MainActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                            Log.d("asdfsadf", "onClick: 로그인 성공");
+                            firebaseAuth.addAuthStateListener(firebaseAuthListener);
+                        } else {
+                            // 로그인 실패
+                            Toast.makeText(MainActivity.this, "아이디 또는 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                            Log.d("asdfsadf", "onClick: 아이디 또는 비밀번호가 일치하지 않습니다.");
+                        }
+                    }
+                });
     }
 
-    public void woojin(View view) {
-        Intent intent = new Intent(MainActivity.this, ListActivity.class);
-        intent.putExtra("sector","출판 등 정보서비스업");
+    public void signup(View view) {
+        Intent intent = new Intent(MainActivity.this, SignupActivity.class);
         startActivity(intent);
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
-    public void laewon(View view) {
-        //Toast.makeText(getApplicationContext(),"201714198 정래원", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(MainActivity.this, ListActivity.class);
-        intent.putExtra("sector","숙박 및 음식점");
-        startActivity(intent);
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (firebaseAuthListener != null) {
+            firebaseAuth.removeAuthStateListener(firebaseAuthListener);
+        }
     }
 
-    public void laewon1(View view) {
-        Intent intent = new Intent(MainActivity.this, ListActivity.class);
-        intent.putExtra("sector","보건, 사회복지 서비스업");
-        startActivity(intent);
-    }
-
-    public void laewon2(View view) {
-        Intent intent = new Intent(MainActivity.this, ListActivity.class);
-        intent.putExtra("sector","스포츠 등 기타 서비스업");
-        startActivity(intent);
-    }
-
-    public void laewon3(View view) {
-        Intent intent = new Intent(MainActivity.this, ListActivity.class);
-        intent.putExtra("sector","기타");
-        startActivity(intent);
-    }
 }

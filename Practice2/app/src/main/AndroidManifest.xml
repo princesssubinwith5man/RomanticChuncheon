@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Practice">
         <activity
+            android:name=".HomeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SignupActivity"
+            android:exported="true" />
+        <activity
             android:name=".MapActivity"
             android:exported="true" />
         <activity
@@ -29,6 +35,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="52abk985cr" />

@@ -63,7 +63,7 @@ public class ListActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     // Get Post object and use the values to update the UI
                     for (DataSnapshot fileSnapshot : dataSnapshot.getChildren()) {
-                        HashMap<String,String> item = new HashMap<String, String>();
+                        //HashMap<String,String> item = new HashMap<String, String>();
                         Shop shop = fileSnapshot.getValue(Shop.class);
                         shopItem.put(shop.name, shop);
                         address = fileSnapshot.child("address").getValue(String.class);
@@ -75,6 +75,8 @@ public class ListActivity extends AppCompatActivity {
                             adapter.addItem(0,name,"0",address);
                         }
                         cnt++;
+                        //if(cnt > 20400)
+                        //    break;
                         String a = Integer.toString(cnt);
                         Log.i("TAG: Total Count ", a);
                     }

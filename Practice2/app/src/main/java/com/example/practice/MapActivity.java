@@ -50,7 +50,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onMapReady(@NonNull NaverMap naverMap) {
         //String address = "강원도 춘천시 춘천로204번길 26(효자동)"; //쿼드 주소
         Location location = addToPoint(this,address);
-        naverMap.setMapType(NaverMap.MapType.Navi); // 맵 타입 설정
+        naverMap.setMapType(NaverMap.MapType.Basic); // 맵 타입 설정
         /*
         Basic: 일반 지도. 하천, 녹지, 도로, 심벌 등 다양한 정보를 노출
         Navi: 차량용 내비게이션에 특화된 지도
@@ -58,7 +58,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Hybrid: 위성 사진과 도로, 심벌을 함께 노출하는 하이브리드 지도
         Terrain: 지형도. 산악 지형을 실제 지형과 유사하게 입체적으로 표현
          */
-        naverMap.setNightModeEnabled(true); // 야간 모드 (MapType.Navi에서만 적용됨)
+        //naverMap.setNightModeEnabled(true); // 야간 모드 (MapType.Navi에서만 적용됨)
         CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(location.getLatitude(), location.getLongitude()))
                 .animate(CameraAnimation.Fly);
         naverMap.moveCamera(cameraUpdate); //카메라 이동
