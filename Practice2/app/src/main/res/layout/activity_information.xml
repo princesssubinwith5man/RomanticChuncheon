@@ -52,7 +52,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/name1"
                 android:text="지도 보기"
-                android:backgroundTint="#66CDAA">
+                android:backgroundTint="#66CDAA"
+                android:onClick="map">
             </Button>
         </RelativeLayout>
     <LinearLayout
@@ -80,7 +81,7 @@
                     android:layout_width="35dp"
                     android:layout_height="30dp"
                     android:onClick="like"
-                    android:background="@drawable/like">
+                    android:background="@drawable/button_change">
                 </Button>
                 <LinearLayout
                     android:layout_width="wrap_content"

@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         List<Address> addresses = null;
 
         try{
-            addresses = geocoder.getFromLocationName(str,3);
+            addresses = geocoder.getFromLocationName(str,1);
         } catch(IOException e){
             e.printStackTrace();
         }
