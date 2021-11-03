@@ -103,7 +103,7 @@ public class ListActivity extends AppCompatActivity {
                     Log.w("FireBaseData", "loadPost:onCancelled", databaseError.toException());
                 }
             });
-            mDatabase.removeEventListener(new ValueEventListener() { // 밸류 이벤트 리스너 삭제
+            mDatabase.removeEventListener(new ValueEventListener() { // 밸류 이벤트리스너 삭제
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                 }
