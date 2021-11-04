@@ -61,7 +61,9 @@ public class ListActivity extends AppCompatActivity {
         HashMap<String, Shop> shopItem = new HashMap<>();
 
         //mDatabase.child("춘천시").child(dong).orderByValue().equalTo(temp, "sector");
-        Query mQuery = mDatabase.child("shop").equalTo(temp, "sector");
+        Query mQuery = mDatabase.child("shop").orderByKey().equalTo(temp, "sector");
+
+
         mDatabase.child("shop").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
