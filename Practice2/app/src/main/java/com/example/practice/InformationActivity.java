@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 public class InformationActivity extends AppCompatActivity {
     String centername;
     String address;
-    String key;
+    String shopNum;
     DatabaseReference mDatabase;
     int like;
     @Override
@@ -36,10 +36,10 @@ public class InformationActivity extends AppCompatActivity {
         centername = intent.getExtras().getString("centername");
         address = intent.getExtras().getString("add");
         like = Integer.parseInt(intent.getExtras().getString("like"));
-        key = intent.getExtras().getString("key");
+        shopNum = intent.getExtras().getString("key");
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mDatabase.child("shop").child(key).child("like").addValueEventListener(new ValueEventListener() {
+        mDatabase.child("shop").child(shopNum).child("like").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 likeText.setText(snapshot.getValue().toString());
@@ -61,16 +61,16 @@ public class InformationActivity extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        mDatabase.child("like").child("wholike").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("like").child(shopNum).child("wholike").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.getValue() != null){
-                    Toast.makeText(InformationActivity.this, "좋아요는 지점당 한 번만 누를 수 있습니다", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InformationActivity.this, "좋아요는 한 번만 누를 수 있습니다", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    mDatabase.child("like").child("wholike").child(user.getUid()).setValue(true);
+                    mDatabase.child("like").child(shopNum).child("wholike").child(user.getUid()).setValue(true);
                     like++;
-                    mDatabase.child("shop").child(key).child("like").setValue(like);
+                    mDatabase.child("shop").child(shopNum).child("like").setValue(like);
                 }
             }
             @Override
