@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -97,6 +99,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Log.d("MainActivity", "당신의 닉네임은 : " + snapshot.getValue());
+                    Toast.makeText(HomeActivity.this, "당신의 닉네임은 "+snapshot.getValue(), Toast.LENGTH_LONG).show();
                 }
             }
 
