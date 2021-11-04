@@ -3,6 +3,7 @@ package com.example.practice;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextPassword;
     private Button buttonLogIn;
     private Button buttonSignUp;
+    private Context mContext;
+
     Handler handler = new Handler();
     Runnable runnable = new Runnable() {
         @Override
@@ -45,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         rellay2 = (RelativeLayout) findViewById(R.id.rellay2);
         handler.postDelayed(runnable, 2000);
         firebaseAuth = FirebaseAuth.getInstance();
-
         editTextEmail = (EditText) findViewById(R.id.edittext_email);
         editTextEmail.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -73,12 +76,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //로그인 정보 저장 체크박스
+        CheckBox save_checkBox = (CheckBox) findViewById(R.id.save_checkbox) ;
+        mContext = this;
+        if (save_checkBox.isChecked()) {
+            editTextEmail.setText(PreferenceManager.getString(mContext, "id"));
+            editTextPassword.setText(PreferenceManager.getString(mContext, "pw"));
+            save_checkBox.setChecked(true);
+        }
+
+
+
 
         buttonLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!editTextEmail.getText().toString().equals("") && !editTextPassword.getText().toString().equals("")) {
                     loginUser(editTextEmail.getText().toString(), editTextPassword.getText().toString());
+                    // 로그인 정보 저장
+                    if (save_checkBox.isChecked()) {
+                        PreferenceManager.setString(mContext, "id", editTextEmail.getText().toString());//id 키값으로 저장
+                        PreferenceManager.setString(mContext, "pw", editTextPassword.getText().toString());//pw 키값으로 저장
+                        PreferenceManager.setBoolean(mContext, "check", save_checkBox.isChecked()); //현재 체크박스 상태 값 저장
+
+                    }
+                    else {
+                        PreferenceManager.setBoolean(mContext, "check", save_checkBox.isChecked()); //현재 체크박스 상태 값 저장
+                        PreferenceManager.clear(mContext); //로그인 정보 삭제
+                    }
+
                 } else {
                     Toast.makeText(MainActivity.this, "계정과 비밀번호를 입력하세요.", Toast.LENGTH_LONG).show();
                     Log.d("asdfsadf", "onClick: 계정과 비밀번호를 입력하세요");
