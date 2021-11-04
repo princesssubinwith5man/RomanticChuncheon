@@ -43,7 +43,7 @@ public class SignupActivity extends AppCompatActivity {
                     Name name = new Name(editTextName.getText().toString(),editTextEmail.getText().toString());
                     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
                     String e = editTextEmail.getText().toString();
-                    mDatabase.child("name").child("name").setValue(name);
+                    mDatabase.child("name").push().setValue(name);
                     createUser(editTextEmail.getText().toString(), editTextPassword.getText().toString(), editTextName.getText().toString());
                 } else {
                     // 이메일과 비밀번호가 공백인 경우
