@@ -3,15 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/grad_bg"
+    android:orientation="vertical"
     tools:context=".ListActivity">
-
-    <ListView android:id="@+id/list"
+    <TextView
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="좋아요"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textSize="50sp"/>
+    <ListView android:id="@+id/list1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fastScrollEnabled="true"
         android:dividerHeight="0px"
-        android:layout_marginTop="30dp"
         android:divider="#FFFFFF" />
 </LinearLayout>

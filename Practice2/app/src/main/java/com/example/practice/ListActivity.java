@@ -46,7 +46,10 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE|View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            getWindow().setStatusBarColor(Color.TRANSPARENT); }
         Intent intent = getIntent();
         temp = intent.getExtras().getString("sector");
 
@@ -84,9 +87,10 @@ public class ListActivity extends AppCompatActivity {
                     cnt++;
                     String a = Integer.toString(cnt);
                     Log.i("TAG: Total Count ", a);
+                    shopList.add(shopItem);
+                    listview.setAdapter(adapter);
                 }
-                shopList.add(shopItem);
-                listview.setAdapter(adapter);
+
                 listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

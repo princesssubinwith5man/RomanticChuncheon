@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/grad_bg"
     tools:context=".InformationActivity">
         <RelativeLayout
+            android:layout_marginTop="30dp"
             android:id="@+id/rellay1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -104,6 +106,13 @@
                         android:fontFamily="sans-serif-light">
                     </TextView>
                 </LinearLayout>
+                <Button
+                    android:layout_marginLeft="170dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="좋아요 누른사람"
+                    android:onClick="who_like"
+                    android:backgroundTint="#66CDAA"/>
             </LinearLayout>
 
         </RelativeLayout>

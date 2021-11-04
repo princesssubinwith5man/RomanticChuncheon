@@ -3,9 +3,13 @@ package com.example.practice;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,10 +25,35 @@ import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
+    TextView tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE|View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            getWindow().setStatusBarColor(Color.TRANSPARENT); }
+        // 로그인시 닉네임불러오기
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String e = user.getUid();
+        FirebaseDatabase.getInstance().getReference("name").child(e).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    tv = findViewById(R.id.nickname);
+                    String nick = snapshot.getValue(String.class) + "님 환영합니다.";
+                    tv.setText(nick);
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
     public void jeonghyeop(View view) {
         Intent intent = new Intent(HomeActivity.this, ListActivity.class);
@@ -92,22 +121,6 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void check_name(View view) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String e = user.getUid();
-        FirebaseDatabase.getInstance().getReference("name").child(e).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Log.d("MainActivity", "당신의 닉네임은 : " + snapshot.getValue());
-                    Toast.makeText(HomeActivity.this, "당신의 닉네임은 "+snapshot.getValue(), Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
     }
 }
