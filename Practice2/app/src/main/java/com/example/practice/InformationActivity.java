@@ -87,4 +87,10 @@ public class InformationActivity extends AppCompatActivity {
         intent.putExtra("add", address);
         startActivity(intent);
     }
+
+    public void who_like(View view) {
+        Intent intent = new Intent(InformationActivity.this, WhoLActivity.class);
+        intent.putExtra("num", shopNum);
+        startActivity(intent);
+    }
 }

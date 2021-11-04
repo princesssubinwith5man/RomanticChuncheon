@@ -104,6 +104,13 @@
                         android:fontFamily="sans-serif-light">
                     </TextView>
                 </LinearLayout>
+                <Button
+                    android:layout_marginLeft="170dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="좋아요 누른사람"
+                    android:onClick="who_like"
+                    android:backgroundTint="#66CDAA"/>
             </LinearLayout>
 
         </RelativeLayout>
