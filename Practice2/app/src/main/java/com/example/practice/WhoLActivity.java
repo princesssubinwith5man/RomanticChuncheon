@@ -40,7 +40,7 @@ public class WhoLActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             String name = snapshot.getValue(String.class);
                             item.put("item1",name);
-                            item.put("item2","이게 되네?");
+                            item.put("item2","");
                             list.add(item);
                             Log.d("asdf", "onDataChange: "+name);
                             setListview();
