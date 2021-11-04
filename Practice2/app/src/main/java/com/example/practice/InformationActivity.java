@@ -1,12 +1,16 @@
 package com.example.practice;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -21,13 +25,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class InformationActivity extends AppCompatActivity {
     String centername;
     String address;
     String shopNum;
-    DocumentReference docRef;
+    DocumentReference shopRef;
     FirebaseFirestore db;
     int like;
     @Override
@@ -49,19 +56,25 @@ public class InformationActivity extends AppCompatActivity {
         shopNum = intent.getExtras().getString("key");
 
         db = FirebaseFirestore.getInstance();
-        docRef = db.collection("shop").document(shopNum).;
+        shopRef = db.collection("shop").document(shopNum);
 
-        docRef.get().
-
-        mDatabase.child("shop").child(shopNum).child("like").addValueEventListener(new ValueEventListener() {
+        shopRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                likeText.setText(snapshot.getValue().toString());
-                like = Integer.parseInt(snapshot.getValue().toString());
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    Log.d(TAG, "Current data: " + snapshot.getData());
+                    
+                    String updateLike = snapshot.getString("like");
+                    likeText.setText(updateLike);
+                    like = Integer.parseInt(updateLike);
+                    
+                } else {
+                    Log.d(TAG, "Current data: null");
+                }
             }
         });
 
@@ -74,6 +87,8 @@ public class InformationActivity extends AppCompatActivity {
         final TextView li = (TextView)findViewById(R.id.likkk);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        
+        db.collection("like").
 
         mDatabase.child("like").child(shopNum).child("wholike").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
