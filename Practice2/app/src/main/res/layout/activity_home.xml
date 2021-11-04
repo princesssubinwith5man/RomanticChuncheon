@@ -97,9 +97,19 @@
                         android:paddingRight="15dp"
                         android:textColor="@color/white"
                         android:textSize="15sp"
+                        android:inputType="textPassword"
                         android:background="@drawable/et_bg">
 
                     </EditText>
+                    <CheckBox android:id="@+id/save_checkbox"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-light"
+                        android:textColor="@color/white"
+                        android:checked="true"
+                        android:text="로그인 정보 저장" />
+
                 </LinearLayout>
             </LinearLayout>
 
