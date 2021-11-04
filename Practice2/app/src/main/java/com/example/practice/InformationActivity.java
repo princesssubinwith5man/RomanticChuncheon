@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -59,14 +60,25 @@ public class InformationActivity extends AppCompatActivity {
         final TextView li = (TextView)findViewById(R.id.likkk);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        Query query = mDatabase.child("like").child(key).child("wholike").equalTo(user.getUid());
+
+        mDatabase.child("like").child("wholike").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getValue() != null){
+                    Toast.makeText(InformationActivity.this, "좋아요는 지점당 한 번만 누를 수 있습니다", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    mDatabase.child("like").child("wholike").child(user.getUid()).setValue(true);
+                    like++;
+                    mDatabase.child("shop").child(key).child("like").setValue(like);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 
 
-
-        if(mDatabase.child("like").child(key).child("wholike").get().getResult().getValue().toString())
-
-        like++;
-        mDatabase.child("like").setValue(like);
     }
 
     public void map(View view) {

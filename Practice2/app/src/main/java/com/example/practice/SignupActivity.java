@@ -41,13 +41,9 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!editTextEmail.getText().toString().equals("") && !editTextPassword.getText().toString().equals("")) {
                     // 이메일과 비밀번호가 공백이 아닌 경우
-                    Name name = new Name(editTextName.getText().toString(),editTextEmail.getText().toString());
-                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                    String e = editTextEmail.getText().toString();
-                    mDatabase.child("name").child("name").setValue(name);
                     createUser(editTextEmail.getText().toString(), editTextPassword.getText().toString(), editTextName.getText().toString());
                 } else {
-                    // 이메일이나 비밀번호나 이름이 공백인 경우
+                    // 이메일과 비밀번호가 공백인 경우
                     Toast.makeText(SignupActivity.this, "계정과 비밀번호를 입력하세요.", Toast.LENGTH_LONG).show();
                     Log.d("asdfsadf", "onClick: 계정과 비밀번호를 입력하세요");
                 }
