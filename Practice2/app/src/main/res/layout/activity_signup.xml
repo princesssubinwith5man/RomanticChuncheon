@@ -39,44 +39,56 @@
 
     <EditText
         android:id="@+id/editText_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp"
+        android:layout_height="40dp"
         android:layout_gravity="center"
+        android:background="@drawable/et_bg"
         android:ems="10"
         android:hint="E-mail"
+        android:textSize="15sp"
         android:inputType="textEmailAddress"
-        android:textColorHint="@color/white"
-        android:backgroundTint="@color/white"
+        android:textColorHint="#D3D3D3"
+
         android:textColor="@android:color/white" />
 
     <EditText
+        android:layout_marginTop="10dp"
         android:id="@+id/editText_passWord"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp"
+        android:layout_height="40dp"
+        android:background="@drawable/et_bg"
         android:layout_gravity="center"
         android:ems="10"
         android:hint="Password"
+        android:textSize="15sp"
         android:inputType="textPassword"
-        android:backgroundTint="@color/white"
-        android:textColorHint="@color/white"
+        android:textColorHint="#D3D3D3"
         android:textColor="@android:color/white" />
 
     <EditText
         android:id="@+id/editText_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center"
         android:ems="10"
         android:hint="Name"
-        android:backgroundTint="@color/white"
-        android:textColorHint="@color/white"
+        android:background="@drawable/et_bg"
+        android:textColorHint="#D3D3D3"
         android:inputType="textPersonName"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:textSize="15sp"/>
 
     <Button
         android:id="@+id/btn_join"
-        android:layout_marginTop="30dp"
-        android:layout_width="250dp"
+        android:layout_marginTop="50dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/btn_bg"
