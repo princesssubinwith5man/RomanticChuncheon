@@ -12,5 +12,6 @@
         android:layout_height="match_parent"
         android:fastScrollEnabled="true"
         android:dividerHeight="0px"
+        android:layout_marginTop="30dp"
         android:divider="#FFFFFF" />
 </LinearLayout>
