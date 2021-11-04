@@ -7,11 +7,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class InformationActivity extends AppCompatActivity {
@@ -33,9 +37,9 @@ public class InformationActivity extends AppCompatActivity {
         address = intent.getExtras().getString("add");
         like = Integer.parseInt(intent.getExtras().getString("like"));
         key = intent.getExtras().getString("key");
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("shop").child(key);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mDatabase.child("like").addValueEventListener(new ValueEventListener() {
+        mDatabase.child("shop").child(key).child("like").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 likeText.setText(snapshot.getValue().toString());
@@ -55,9 +59,26 @@ public class InformationActivity extends AppCompatActivity {
     public void like(View view) {
         final TextView li = (TextView)findViewById(R.id.likkk);
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        like++;
-        mDatabase.child("like").setValue(like);
+        mDatabase.child("like").child("wholike").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getValue() != null){
+                    Toast.makeText(InformationActivity.this, "좋아요는 지점당 한 번만 누를 수 있습니다", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    mDatabase.child("like").child("wholike").child(user.getUid()).setValue(true);
+                    like++;
+                    mDatabase.child("shop").child(key).child("like").setValue(like);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+
     }
 
     public void map(View view) {
