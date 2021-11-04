@@ -39,9 +39,12 @@ public class SignupActivity extends AppCompatActivity {
         buttonJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!editTextEmail.getText().toString().equals("") && !editTextPassword.getText().toString().equals("")
-                        && !editTextName.getText().toString().equals("")) {
-                    // 이메일과 비밀번호와 이름이 공백이 아닌 경우
+                if (!editTextEmail.getText().toString().equals("") && !editTextPassword.getText().toString().equals("")) {
+                    // 이메일과 비밀번호가 공백이 아닌 경우
+                    Name name = new Name(editTextName.getText().toString(),editTextEmail.getText().toString());
+                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                    String e = editTextEmail.getText().toString();
+                    mDatabase.child("name").child("name").setValue(name);
                     createUser(editTextEmail.getText().toString(), editTextPassword.getText().toString(), editTextName.getText().toString());
                 } else {
                     // 이메일이나 비밀번호나 이름이 공백인 경우
@@ -58,13 +61,14 @@ public class SignupActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // 회원가입 성공시
-
-                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            DatabaseReference database = FirebaseDatabase.getInstance().getReference("user").child(user.getUid());
-                            database.child("name").setValue(name);
-
                             Toast.makeText(SignupActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
                             Log.d("asdfsadf", "onClick: 회원가입 성공");
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            String e = user.getUid();
+                            Log.d("dafsadf", "onComplete: "+e);
+                            Name name = new Name(editTextName.getText().toString());
+                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("name");
+                            mDatabase.child(e).setValue(name);
                             finish();
                         } else {
                             // 계정이 중복된 경우
