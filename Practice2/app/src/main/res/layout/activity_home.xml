@@ -91,6 +91,7 @@
                     <EditText
                         android:id="@+id/edittext_password"
                         android:layout_width="match_parent"
+                        android:focusable="true"
                         android:inputType="textPassword"
                         android:textStyle="bold"
                         android:layout_height="40dp"
@@ -100,7 +101,6 @@
                         android:paddingRight="15dp"
                         android:textColor="@color/white"
                         android:textSize="15sp"
-                        android:inputType="textPassword"
                         android:background="@drawable/et_bg">
 
                     </EditText>

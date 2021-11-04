@@ -13,6 +13,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignupActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
@@ -38,6 +40,10 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!editTextEmail.getText().toString().equals("") && !editTextPassword.getText().toString().equals("")) {
                     // 이메일과 비밀번호가 공백이 아닌 경우
+                    Name name = new Name(editTextName.getText().toString(),editTextEmail.getText().toString());
+                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                    String e = editTextEmail.getText().toString();
+                    mDatabase.child("name").child("name").setValue(name);
                     createUser(editTextEmail.getText().toString(), editTextPassword.getText().toString(), editTextName.getText().toString());
                 } else {
                     // 이메일과 비밀번호가 공백인 경우
