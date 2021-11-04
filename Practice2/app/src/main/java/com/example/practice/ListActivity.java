@@ -69,6 +69,9 @@ public class ListActivity extends AppCompatActivity {
                 for (DataSnapshot fileSnapshot : dataSnapshot.getChildren()) {
                     //HashMap<String,String> item = new HashMap<String, String>();
 
+
+                    //sfksdlfjsd;lfjasdlfjasdl;fjasdl;fjasdl;fjasdl;fsdjla
+
                     Shop shop = fileSnapshot.getValue(Shop.class);
                     shopItem.put(shop.name, shop);
 
