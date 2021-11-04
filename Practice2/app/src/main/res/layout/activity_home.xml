@@ -63,6 +63,7 @@
                         android:id="@+id/edittext_email"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:textStyle="bold"
                         android:layout_marginTop="5dp"
                         android:fontFamily="sans-serif-light"
                         android:paddingLeft="15dp"
@@ -90,6 +91,9 @@
                     <EditText
                         android:id="@+id/edittext_password"
                         android:layout_width="match_parent"
+                        android:focusable="true"
+                        android:inputType="textPassword"
+                        android:textStyle="bold"
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
                         android:fontFamily="sans-serif-light"
@@ -97,7 +101,6 @@
                         android:paddingRight="15dp"
                         android:textColor="@color/white"
                         android:textSize="15sp"
-                        android:inputType="textPassword"
                         android:background="@drawable/et_bg">
 
                     </EditText>

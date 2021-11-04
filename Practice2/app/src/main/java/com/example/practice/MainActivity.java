@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     EditText editText = (EditText) findViewById(R.id.edittext_password);
                     editText.requestFocus();
+
                     return true;
                 }
                 return false;
