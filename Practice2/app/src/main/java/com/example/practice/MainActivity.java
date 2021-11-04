@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,6 +48,35 @@ public class MainActivity extends AppCompatActivity {
 
         editTextEmail = (EditText) findViewById(R.id.edittext_email);
         editTextPassword = (EditText) findViewById(R.id.edittext_password);
+        editTextPassword.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                //Enter key Action
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    if (!editTextEmail.getText().toString().equals("") && !editTextPassword.getText().toString().equals("")) {
+                        loginUser(editTextEmail.getText().toString(), editTextPassword.getText().toString());
+                    } else {
+                        Toast.makeText(MainActivity.this, "계정과 비밀번호를 입력하세요.", Toast.LENGTH_LONG).show();
+                        Log.d("asdfsadf", "onClick: 계정과 비밀번호를 입력하세요");
+                    }
+                    firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
+                        @Override
+                        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            if (user != null) {
+                                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                            }
+                        }
+                    };
+                    return true;
+                }
+                return false;
+            }
+        });
+
         buttonLogIn = (Button) findViewById(R.id.btn_login);
         buttonLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
