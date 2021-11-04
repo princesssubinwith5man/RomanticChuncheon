@@ -82,9 +82,10 @@ public class ListActivity extends AppCompatActivity {
                     cnt++;
                     String a = Integer.toString(cnt);
                     Log.i("TAG: Total Count ", a);
+                    shopList.add(shopItem);
+                    listview.setAdapter(adapter);
                 }
-                shopList.add(shopItem);
-                listview.setAdapter(adapter);
+
                 listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
