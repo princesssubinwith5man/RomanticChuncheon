@@ -20,12 +20,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class InformationActivity extends AppCompatActivity {
     String centername;
     String address;
     String shopNum;
-    DatabaseReference mDatabase;
+    DocumentReference docRef;
+    FirebaseFirestore db;
     int like;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,11 @@ public class InformationActivity extends AppCompatActivity {
         address = intent.getExtras().getString("add");
         like = Integer.parseInt(intent.getExtras().getString("like"));
         shopNum = intent.getExtras().getString("key");
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        db = FirebaseFirestore.getInstance();
+        docRef = db.collection("shop").document(shopNum).;
+
+        docRef.get().
 
         mDatabase.child("shop").child(shopNum).child("like").addValueEventListener(new ValueEventListener() {
             @Override
