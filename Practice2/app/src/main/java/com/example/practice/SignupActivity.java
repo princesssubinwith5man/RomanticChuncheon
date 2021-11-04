@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -40,10 +41,6 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!editTextEmail.getText().toString().equals("") && !editTextPassword.getText().toString().equals("")) {
                     // 이메일과 비밀번호가 공백이 아닌 경우
-                    Name name = new Name(editTextName.getText().toString(),editTextEmail.getText().toString());
-                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                    String e = editTextEmail.getText().toString();
-                    mDatabase.child("name").push().setValue(name);
                     createUser(editTextEmail.getText().toString(), editTextPassword.getText().toString(), editTextName.getText().toString());
                 } else {
                     // 이메일과 비밀번호가 공백인 경우
@@ -62,6 +59,12 @@ public class SignupActivity extends AppCompatActivity {
                             // 회원가입 성공시
                             Toast.makeText(SignupActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
                             Log.d("asdfsadf", "onClick: 회원가입 성공");
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            String e = user.getUid();
+                            Log.d("dafsadf", "onComplete: "+e);
+                            Name name = new Name(editTextName.getText().toString());
+                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("name");
+                            mDatabase.child(e).setValue(name);
                             finish();
                         } else {
                             // 계정이 중복된 경우

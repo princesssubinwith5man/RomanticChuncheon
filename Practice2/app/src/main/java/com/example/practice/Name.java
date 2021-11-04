@@ -24,9 +24,8 @@ public class Name {
     public void setkind(String email) {
         this.email = email;
     }
-    public Name(String name, String email){
+    public Name(String name){
         this.name = name;
-        this.email = email;
     }
 
 }
