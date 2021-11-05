@@ -155,7 +155,6 @@ public class InformationActivity extends AppCompatActivity {
     }
     public void like(View view) {
         final TextView li = (TextView)findViewById(R.id.likkk);
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
