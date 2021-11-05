@@ -69,7 +69,10 @@ public class ListActivity extends AppCompatActivity {
 
         // like(좋아요) 기준으로 내림차순, temp와 동일한 것만 보이게, 100개만 보여줘
         CollectionReference shopRef = db.collection("shop");
-        Query query = shopRef.orderBy("like", Query.Direction.DESCENDING).whereEqualTo("sector", temp).limit(100);
+        Query query = shopRef
+                .orderBy("like", Query.Direction.DESCENDING)
+                .whereEqualTo("sector", temp)
+                .limit(100);
 
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             // 쿼리 실행 결과 리스트뷰로 보이기
