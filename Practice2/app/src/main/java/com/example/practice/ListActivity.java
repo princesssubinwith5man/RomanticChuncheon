@@ -64,7 +64,7 @@ public class ListActivity extends AppCompatActivity {
         HashMap<String, Shop> shopItem = new HashMap<>();
 
         //mDatabase.child("춘천시").child(dong).orderByValue().equalTo(temp, "sector");
-        Query mQuery = mDatabase.child("shop").orderByKey().equalTo(temp, "sector");
+        //Query mQuery = mDatabase.child("shop").orderByKey().equalTo(temp, "sector");
 
 
         mDatabase.child("shop").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -100,8 +100,6 @@ public class ListActivity extends AppCompatActivity {
                         String key = listViewItem.getKey();
                         String like = listViewItem.getLike();
 
-                        //Toastdd.makeText(getApplicationContext(), "위도 : " + centerName, Toast.LENGTH_LONG).show();
-                        //Log.i("TAG: value is ", centerName + " : " + address);
                         Intent intent = new Intent(ListActivity.this, InformationActivity.class);
                         intent.putExtra("centername", centerName);
                         intent.putExtra("add", address);
