@@ -59,63 +59,117 @@
             </Button>
         </RelativeLayout>
     <LinearLayout
+        android:id="@+id/Lin1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
         android:layout_below="@+id/rellay1"
         android:orientation="horizontal">
         <RelativeLayout
+            android:id="@+id/Rellay1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/custom_listview"
             android:layout_gravity="center"
             android:paddingTop="10dp"
             android:paddingBottom="20dp">
+
             <LinearLayout
+                android:id="@+id/LinearL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/custom_listview"
                 android:orientation="horizontal">
+
                 <Button
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginRight="15dp"
                     android:layout_width="35dp"
                     android:layout_height="30dp"
-                    android:onClick="like"
-                    android:background="@drawable/button_change">
-                </Button>
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/button_change"
+                    android:onClick="like"></Button>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal">
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/likkk"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
                         android:text="0"
-                        android:textSize="25sp"
-                        android:fontFamily="sans-serif-light">
-                    </TextView>
+                        android:textSize="25sp"></TextView>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
                         android:text="Like"
-                        android:textSize="13sp"
-                        android:fontFamily="sans-serif-light">
-                    </TextView>
+                        android:textSize="13sp"></TextView>
                 </LinearLayout>
+
                 <Button
-                    android:layout_marginLeft="170dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="좋아요 누른사람"
+                    android:layout_marginLeft="170dp"
+                    android:backgroundTint="#66CDAA"
                     android:onClick="who_like"
-                    android:backgroundTint="#66CDAA"/>
+                    android:text="좋아요 누른사람" />
+
             </LinearLayout>
 
+            <ListView
+                android:id="@+id/comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/LinearL" />
         </RelativeLayout>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom">
+        <RelativeLayout
+            android:id="@+id/Rellay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center">
+            <LinearLayout
+                android:id="@+id/Linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_listview"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/editText_comment"
+                    android:layout_width="300dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:ems="10"
+                    android:hint="댓글을 작성해 주세요"
+                    android:textColorHint="#D3D3D3"
+                    android:inputType="textPersonName"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="#66CDAA"
+                    android:onClick="comment1"
+                    android:text="작성" />
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>
 
