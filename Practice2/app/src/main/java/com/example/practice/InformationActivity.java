@@ -208,7 +208,7 @@ public class InformationActivity extends AppCompatActivity {
         Comment comment = new Comment(dat, LocalDateTime.now().toString());
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("comment").child(shopNum);
         mDatabase.child(e).push().setValue(comment);
-
+        mDatabase.child(e).setValue(comment);
         //setListview();
     }
     private void setListview(){
