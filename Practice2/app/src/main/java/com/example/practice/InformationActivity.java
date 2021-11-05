@@ -48,11 +48,13 @@ public class InformationActivity extends AppCompatActivity {
     String centername;
     String address;
     String shopNum;
+    String nick_name;
     DatabaseReference mDatabase;
     static int check = 0;
     private ListView listView;
     private ArrayAdapter<String> adapter;
     List<Object> Array = new ArrayList<Object>();
+    //ArrayList<HashMap<String,String>> list1 = new ArrayList<HashMap<String, String>>();
     DocumentReference shopRef;
     FirebaseFirestore db;
     int like;
@@ -70,6 +72,7 @@ public class InformationActivity extends AppCompatActivity {
         final TextView cn = findViewById(R.id.name);
         final TextView ad = findViewById(R.id.name1);
         TextView likeText = findViewById(R.id.likkk);
+
         listView =(ListView)findViewById(R.id.comment);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, new ArrayList<String>());
         listView.setAdapter(adapter);
@@ -118,20 +121,34 @@ public class InformationActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 adapter.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    //HashMap<String,String> item = new HashMap<String, String>();
+                    HashMap<String,String> item = new HashMap<String, String>();
                     Object temp = snapshot.getValue(Object.class);
                     String[] temp1 = temp.toString().split("=|\\}|,");
                     String name = snapshot.getKey();
-                    for(int i=0;i<temp1.length;i++){
-                        if(i%2 != 0) {
-                            //Log.d("asdfsafd", "onDataChange: " + temp1[i]);
-                            Array.add(temp1[i]);
-                            adapter.add(temp1[i]);
+                    FirebaseDatabase.getInstance().getReference("name").child(name).child("name").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            nick_name =snapshot.getValue(String.class);
+                            Log.d(TAG, "nickname is "+nick_name);
+                            for(int i=0;i<temp1.length;i++){
+                                if(i%2 != 0) {
+                                    //Log.d("asdfsafd", "onDataChange: " + temp1[i]);
+                                    String cmt = nick_name+": "+temp1[i];
+                                    Array.add(cmt);
+                                    adapter.add(cmt);
+                                }
+                            }
+                            adapter.notifyDataSetChanged();
+                            listView.setSelection(adapter.getCount() - 1);
                         }
-                    }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                 }
-                adapter.notifyDataSetChanged();
-                listView.setSelection(adapter.getCount() - 1);
 
             }
 
