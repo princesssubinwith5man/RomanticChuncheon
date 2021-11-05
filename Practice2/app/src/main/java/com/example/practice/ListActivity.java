@@ -24,8 +24,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +40,7 @@ import static com.example.practice.R.layout.listview_custom;
 public class ListActivity extends AppCompatActivity {
     ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
     ArrayList<HashMap<String, Shop>> shopList = new ArrayList<>();
-    DatabaseReference mDatabase;
+    FirebaseFirestore db;
     ListView listview;
 
     String temp;
@@ -53,7 +57,7 @@ public class ListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         temp = intent.getExtras().getString("sector");
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        db = FirebaseFirestore.getInstance();
 
         listview = (ListView) findViewById(R.id.list);
         GetData();
@@ -64,23 +68,19 @@ public class ListActivity extends AppCompatActivity {
         HashMap<String, Shop> shopItem = new HashMap<>();
 
         //mDatabase.child("춘천시").child(dong).orderByValue().equalTo(temp, "sector");
-        Query mQuery = mDatabase.child("shop").equalTo(temp, "sector");
-        mDatabase.child("shop").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        CollectionReference shopRef = db.collection("shop");
+        Query query = shopRef.whereEqualTo("sector", temp);
+
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                DataSnapshot dataSnapshot = (DataSnapshot) task.getResult();
-                for (DataSnapshot fileSnapshot : dataSnapshot.getChildren()) {
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
                     //HashMap<String,String> item = new HashMap<String, String>();
 
-                    Shop shop = fileSnapshot.getValue(Shop.class);
+                    Shop shop = document.toObject(Shop.class);
                     shopItem.put(shop.name, shop);
 
                     Log.i("TAG: value is ", shop.name + shop.sector + " : " + temp);
-                    if (shop.name == null || shop.name.isEmpty()) continue;
-                    if (shop.sector.equals(temp)) {
-                        Log.i("TAG: value is ", shop.name + " : " + shop.address + ", " + shop.sector);
-                        adapter.addItem(0, shop.name,  Integer.toString(shop.like), shop.address, fileSnapshot.getKey());
-                    }
 
                     cnt++;
                     String a = Integer.toString(cnt);

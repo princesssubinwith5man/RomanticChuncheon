@@ -30,6 +30,9 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class InformationActivity extends AppCompatActivity {
     String centername;
     String address;
@@ -67,8 +70,8 @@ public class InformationActivity extends AppCompatActivity {
                 }
                 if (snapshot != null && snapshot.exists()) {
                     Log.d(TAG, "Current data: " + snapshot.getData());
-                    
-                    String updateLike = snapshot.getString("like");
+
+                    String updateLike = Long.toString(snapshot.getLong("like"));
                     likeText.setText(updateLike);
                     like = Integer.parseInt(updateLike);
                     
@@ -88,8 +91,13 @@ public class InformationActivity extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         
-        db.collection("like").
+        Map<String, Boolean> map = (Map<String, Boolean>) db.collection("like").document(shopNum).get().getResult().get("wholike");
+        if(map.get(user.getUid()) != true){
 
+            map.put(user.getUid(), true);
+            db.collection("like").document(shopNum).set(map);
+        }
+        /*
         mDatabase.child("like").child(shopNum).child("wholike").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -106,7 +114,7 @@ public class InformationActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
+        */
 
     }
 
