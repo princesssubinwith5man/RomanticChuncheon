@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -37,6 +38,8 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,25 +124,22 @@ public class InformationActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 adapter.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    HashMap<String,String> item = new HashMap<String, String>();
-                    Object temp = snapshot.getValue(Object.class);
-                    String[] temp1 = temp.toString().split("=|\\}|,");
                     String name = snapshot.getKey();
-                    FirebaseDatabase.getInstance().getReference("name").child(name).child("name").addValueEventListener(new ValueEventListener() {
+                    for(DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        HashMap<String,String> item = new HashMap<String, String>();
+                        String temp = snapshot1.child("dat").getValue(String.class);
+                        Log.d("asdfsafd", "onDataChange: " + temp);
+                        FirebaseDatabase.getInstance().getReference("name").child(name).child("name").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             nick_name =snapshot.getValue(String.class);
                             Log.d(TAG, "nickname is "+nick_name);
-                            for(int i=0;i<temp1.length;i++){
-                                if(i%2 != 0) {
-                                    //Log.d("asdfsafd", "onDataChange: " + temp1[i]);
-                                    String cmt = nick_name+": "+temp1[i];
-                                    Array.add(cmt);
-                                    adapter.add(cmt);
-                                }
-                            }
+                            String cmt = nick_name+": "+temp;
+                            Array.add(cmt);
+                            adapter.add(cmt);
                             adapter.notifyDataSetChanged();
                             listView.setSelection(adapter.getCount() - 1);
+
                         }
 
                         @Override
@@ -147,6 +147,9 @@ public class InformationActivity extends AppCompatActivity {
 
                         }
                     });
+                    }
+
+
 
                 }
 
@@ -203,6 +206,7 @@ public class InformationActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void comment1(View view) {
         HashMap<String,String> item = new HashMap<String, String>();
         EditText cmt = (EditText) findViewById(R.id.editText_comment);
@@ -210,8 +214,9 @@ public class InformationActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String e = user.getUid();
         Log.d("dafsadf", "onComplete: "+dat);
+        Comment comment = new Comment(dat, LocalDateTime.now().toString());
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("comment").child(shopNum);
-        mDatabase.child(e).push().setValue(dat);
+        mDatabase.child(e).push().setValue(comment);
 
         //setListview();
     }
