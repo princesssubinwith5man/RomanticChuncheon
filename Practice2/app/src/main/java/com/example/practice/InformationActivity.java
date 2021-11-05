@@ -48,8 +48,7 @@ public class InformationActivity extends AppCompatActivity {
     String shopNum;
     DatabaseReference mDatabase;
     static int check = 0;
-    final ArrayList<HashMap<String,String>> list1 = new ArrayList<HashMap<String, String>>();
-    final HashMap<String,String> item = new HashMap<String, String>();
+    ArrayList<HashMap<String,String>> list1 = new ArrayList<HashMap<String, String>>();
     DocumentReference shopRef;
     FirebaseFirestore db;
     int like;
@@ -112,8 +111,9 @@ public class InformationActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    HashMap<String,String> item = new HashMap<String, String>();
                     Object temp = snapshot.getValue(Object.class);
-                   /* String[] temp1 = temp.toString().split("=|\\}|,");
+                    String[] temp1 = temp.toString().split("=|\\}|,");
                     String name = snapshot.getKey();
                     for(int i=0;i<temp1.length;i++){
                         if(i%2 != 0) {
@@ -121,12 +121,9 @@ public class InformationActivity extends AppCompatActivity {
                             item.put("item1", name);
                             item.put("item2", temp1[i]);
                             list1.add(item);
-                            for(int j =0;j<list1.size();j++) {
-                                Log.d("asdfsafd", "onDataChange: " + list1.get(j));
-                            }
                             setListview();
                         }
-                    }*/
+                    }
 
                     //Log.d("asdf", "onDataChange: "+name);
                     //Log.d("asdfsafd", "onDataChange: "+temp1[1]);
@@ -187,6 +184,7 @@ public class InformationActivity extends AppCompatActivity {
     }
 
     public void comment1(View view) {
+        HashMap<String,String> item = new HashMap<String, String>();
         EditText cmt = (EditText) findViewById(R.id.editText_comment);
         String dat = cmt.getText().toString();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
