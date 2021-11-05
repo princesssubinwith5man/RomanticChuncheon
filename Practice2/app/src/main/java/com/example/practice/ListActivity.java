@@ -67,7 +67,6 @@ public class ListActivity extends AppCompatActivity {
         ListViewAdapter adapter = new ListViewAdapter();
         HashMap<String, Shop> shopItem = new HashMap<>();
 
-        //mDatabase.child("춘천시").child(dong).orderByValue().equalTo(temp, "sector");
         CollectionReference shopRef = db.collection("shop");
         Query query = shopRef.whereEqualTo("sector", temp);
 
