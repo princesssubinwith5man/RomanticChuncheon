@@ -130,31 +130,23 @@ public class InformationActivity extends AppCompatActivity {
                         String temp = snapshot1.child("dat").getValue(String.class);
                         Log.d("asdfsafd", "onDataChange: " + temp);
                         FirebaseDatabase.getInstance().getReference("name").child(name).child("name").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            nick_name =snapshot.getValue(String.class);
-                            Log.d(TAG, "nickname is "+nick_name);
-                            String cmt = nick_name+": "+temp;
-                            Array.add(cmt);
-                            adapter.add(cmt);
-                            adapter.notifyDataSetChanged();
-                            listView.setSelection(adapter.getCount() - 1);
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                nick_name =snapshot.getValue(String.class);
+                                Log.d(TAG, "nickname is "+nick_name);
+                                String cmt = nick_name+": "+temp;
+                                Array.add(cmt);
+                                adapter.add(cmt);
+                                adapter.notifyDataSetChanged();
+                                listView.setSelection(adapter.getCount() - 1);
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
                     }
-
-
-
                 }
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
