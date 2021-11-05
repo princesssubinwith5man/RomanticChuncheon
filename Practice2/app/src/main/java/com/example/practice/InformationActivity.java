@@ -16,6 +16,8 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
@@ -90,32 +93,32 @@ public class InformationActivity extends AppCompatActivity {
         final TextView li = (TextView)findViewById(R.id.likkk);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        
-        Map<String, Boolean> map = (Map<String, Boolean>) db.collection("like").document(shopNum).get().getResult().get("wholike");
-        if(map.get(user.getUid()) != true){
 
-            map.put(user.getUid(), true);
-            db.collection("like").document(shopNum).set(map);
-        }
-        /*
-        mDatabase.child("like").child(shopNum).child("wholike").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+        db.collection("like").document(shopNum).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue() != null){
-                    Toast.makeText(InformationActivity.this, "좋아요는 한 번만 누를 수 있습니다", Toast.LENGTH_SHORT).show();
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if(document.exists()){
+                        Map<String, Object> map = document.getData();
+                        if(map.get(user.getUid()).toString().equals("true"))
+                            Toast.makeText(InformationActivity.this, "좋아요는 한번만 누를 수 있습니다", Toast.LENGTH_SHORT).show();
+                        else{
+                            map.put(user.getUid(), true);
+                            db.collection("like").document(shopNum).set(map);
+                            db.collection("shop").document(shopNum).update("like", FieldValue.increment(1));
+                        }
+                    }
+                    else{
+                        Map<String, Boolean> map = new HashMap<>();
+                        map.put(user.getUid(), true);
+                        db.collection("like").document(shopNum).set(map);
+                        db.collection("shop").document(shopNum).update("like", FieldValue.increment(1));
+                    }
                 }
-                else{
-                    mDatabase.child("like").child(shopNum).child("wholike").child(user.getUid()).setValue(true);
-                    like++;
-                    mDatabase.child("shop").child(shopNum).child("like").setValue(like);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        */
-
     }
 
     public void map(View view) {
