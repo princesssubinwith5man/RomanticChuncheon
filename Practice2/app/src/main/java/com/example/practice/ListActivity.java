@@ -75,7 +75,6 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
-                    //HashMap<String,String> item = new HashMap<String, String>();
 
                     Shop shop = document.toObject(Shop.class);
                     shopItem.put(shop.name, shop);
