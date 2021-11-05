@@ -1,8 +1,8 @@
 package com.example.practice;
 
 public class Comment {
-    String dat; //이름
-    String time; //이메일
+    String dat;
+    String time;
 
     public Comment() {
     } //이건 기본적으로 쓰더라구요.

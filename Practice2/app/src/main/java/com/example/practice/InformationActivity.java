@@ -119,7 +119,9 @@ public class InformationActivity extends AppCompatActivity {
     public void getComment(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
-        FirebaseDatabase.getInstance().getReference("comment").child(shopNum).addValueEventListener(new ValueEventListener() {
+        Query query = FirebaseDatabase.getInstance().getReference("comment").child(shopNum).order("time");
+
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 adapter.clear();
@@ -152,6 +154,42 @@ public class InformationActivity extends AppCompatActivity {
 
             }
         });
+
+        /*
+
+        FirebaseDatabase.getInstance().getReference("comment").child(shopNum).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                adapter.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String name = snapshot.getKey();
+                    for(DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        HashMap<String,String> item = new HashMap<String, String>();
+                        String temp = snapshot1.child("dat").getValue(String.class);
+                        Log.d("asdfsafd", "onDataChange: " + temp);
+                        FirebaseDatabase.getInstance().getReference("name").child(name).child("name").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                nick_name =snapshot.getValue(String.class);
+                                Log.d(TAG, "nickname is "+nick_name);
+                                String cmt = nick_name+": "+temp;
+                                Array.add(cmt);
+                                adapter.add(cmt);
+                                adapter.notifyDataSetChanged();
+                                listView.setSelection(adapter.getCount() - 1);
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });*/
     }
     public void like(View view) {
         final TextView li = (TextView)findViewById(R.id.likkk);
@@ -208,7 +246,6 @@ public class InformationActivity extends AppCompatActivity {
         Comment comment = new Comment(dat, LocalDateTime.now().toString());
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("comment").child(shopNum);
         mDatabase.child(e).push().setValue(comment);
-        mDatabase.child(e).setValue(comment);
         //setListview();
     }
     private void setListview(){
