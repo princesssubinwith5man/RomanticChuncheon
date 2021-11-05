@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -37,6 +38,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import java.util.ArrayList;
@@ -48,7 +50,9 @@ public class InformationActivity extends AppCompatActivity {
     String shopNum;
     DatabaseReference mDatabase;
     static int check = 0;
-    ArrayList<HashMap<String,String>> list1 = new ArrayList<HashMap<String, String>>();
+    private ListView listView;
+    private ArrayAdapter<String> adapter;
+    List<Object> Array = new ArrayList<Object>();
     DocumentReference shopRef;
     FirebaseFirestore db;
     int like;
@@ -66,6 +70,9 @@ public class InformationActivity extends AppCompatActivity {
         final TextView cn = findViewById(R.id.name);
         final TextView ad = findViewById(R.id.name1);
         TextView likeText = findViewById(R.id.likkk);
+        listView =(ListView)findViewById(R.id.comment);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, new ArrayList<String>());
+        listView.setAdapter(adapter);
 
         Intent intent = getIntent();
         centername = intent.getExtras().getString("centername");
@@ -104,31 +111,27 @@ public class InformationActivity extends AppCompatActivity {
         }
     }
     public void getComment(){
-        check = 1;
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
         FirebaseDatabase.getInstance().getReference("comment").child(shopNum).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                adapter.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    HashMap<String,String> item = new HashMap<String, String>();
+                    //HashMap<String,String> item = new HashMap<String, String>();
                     Object temp = snapshot.getValue(Object.class);
                     String[] temp1 = temp.toString().split("=|\\}|,");
                     String name = snapshot.getKey();
                     for(int i=0;i<temp1.length;i++){
                         if(i%2 != 0) {
                             //Log.d("asdfsafd", "onDataChange: " + temp1[i]);
-                            item.put("item1", name);
-                            item.put("item2", temp1[i]);
-                            list1.add(item);
-                            setListview();
+                            Array.add(temp1[i]);
+                            adapter.add(temp1[i]);
                         }
                     }
-
-                    //Log.d("asdf", "onDataChange: "+name);
-                    //Log.d("asdfsafd", "onDataChange: "+temp1[1]);
-
                 }
+                adapter.notifyDataSetChanged();
+                listView.setSelection(adapter.getCount() - 1);
 
             }
 
@@ -192,14 +195,12 @@ public class InformationActivity extends AppCompatActivity {
         Log.d("dafsadf", "onComplete: "+dat);
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("comment").child(shopNum);
         mDatabase.child(e).push().setValue(dat);
-        item.put("item1", e);
-        item.put("item2", dat);
-        list1.add(item);
-        setListview();
+
+        //setListview();
     }
     private void setListview(){
-        ListView listView =(ListView)findViewById(R.id.comment);
-        SimpleAdapter adapter = new SimpleAdapter(this, list1, android.R.layout.simple_list_item_2,new String[]{"item1","item2"}, new int[] {android.R.id.text1, android.R.id.text2});
-        listView.setAdapter(adapter);
+        //ListView listView =(ListView)findViewById(R.id.comment);
+        //SimpleAdapter adapter = new SimpleAdapter(this, list1, android.R.layout.simple_list_item_2,new String[]{"item1","item2"}, new int[] {android.R.id.text1, android.R.id.text2});
+        //listView.setAdapter(adapter);
     }
 }
