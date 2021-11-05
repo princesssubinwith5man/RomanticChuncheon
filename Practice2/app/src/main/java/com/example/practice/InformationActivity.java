@@ -154,8 +154,8 @@ public class InformationActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
                         Map<String, Object> map = document.getData();
-                        if(map.get(user.getUid()).toString().equals("true"))
-                            Toast.makeText(InformationActivity.this, "좋아요는 한번만 누를 수 있습니다", Toast.LENGTH_SHORT).show();
+                        if(map.containsKey(user.getUid().toString()) && map.get(user.getUid()).toString().equals("true"))
+                            Toast.makeText(InformationActivity.this, "좋아요는 한번만 누를 수 있습니다", Toast.LENGTH_LONG).show();
                         else{
                             map.put(user.getUid(), true);
                             db.collection("like").document(shopNum).set(map);
