@@ -44,15 +44,10 @@ public class HomeActivity extends AppCompatActivity {
                     tv = findViewById(R.id.nickname);
                     String nick = snapshot.getValue(String.class) + "님 환영합니다.";
                     tv.setText(nick);
-
-
                 }
             }
-
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) { }
         });
     }
     public void jeonghyeop(View view) {
