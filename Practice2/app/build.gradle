@@ -1,11 +1,14 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+
 }
 
 android {
     compileSdk 31
-
+    dataBinding {
+        enabled = true
+    }
     defaultConfig {
         applicationId "com.example.practice"
         minSdk 21
@@ -42,4 +45,6 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+
 }

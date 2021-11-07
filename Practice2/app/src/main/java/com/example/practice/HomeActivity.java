@@ -1,5 +1,6 @@
 package com.example.practice;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -49,6 +52,28 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) { }
         });
+        // 하단 네비게이션바
+        BottomNavigationView naviView = (BottomNavigationView) findViewById(R.id.bottom_nav);
+        naviView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        // 뭐골랐는지 확인
+                        switch (item.getItemId()) {
+                            case R.id.navi_main:
+                                Toast.makeText(HomeActivity.this, "죽여줘", Toast.LENGTH_LONG).show();
+                                return true;
+                            case R.id.navi_search:
+                                Toast.makeText(HomeActivity.this, "검색해줘", Toast.LENGTH_LONG).show();
+                                return true;
+                            case R.id.navi_board:
+                                Toast.makeText(HomeActivity.this, "게시판가줘", Toast.LENGTH_LONG).show();
+                                return true;
+                        }
+                        return false;
+                    }
+                });
+
     }
     public void jeonghyeop(View view) {
         Intent intent = new Intent(HomeActivity.this, ListActivity.class);
