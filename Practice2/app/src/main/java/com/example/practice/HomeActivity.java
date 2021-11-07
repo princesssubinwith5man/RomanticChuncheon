@@ -65,6 +65,8 @@ public class HomeActivity extends AppCompatActivity {
                                 return true;
                             case R.id.navi_search:
                                 Toast.makeText(HomeActivity.this, "검색해줘", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
+                                startActivity(intent);
                                 return true;
                             case R.id.navi_board:
                                 Toast.makeText(HomeActivity.this, "게시판가줘", Toast.LENGTH_LONG).show();
