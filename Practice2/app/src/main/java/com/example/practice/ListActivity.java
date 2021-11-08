@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
@@ -42,7 +43,7 @@ public class ListActivity extends AppCompatActivity {
     ArrayList<HashMap<String, Shop>> shopList = new ArrayList<>();
     FirebaseFirestore db;
     ListView listview;
-
+    static ProgressBar pb;
     String temp;
     static int cnt = 0;
 
@@ -50,6 +51,7 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        pb = (ProgressBar)findViewById(R.id.progressbar);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE|View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
@@ -73,7 +75,7 @@ public class ListActivity extends AppCompatActivity {
                 .orderBy("like", Query.Direction.DESCENDING)
                 .whereEqualTo("sector", temp)
                 .limit(100);
-
+        pb.setVisibility(View.VISIBLE);
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             // 쿼리 실행 결과 리스트뷰로 보이기
             @Override
@@ -93,7 +95,7 @@ public class ListActivity extends AppCompatActivity {
                     shopList.add(shopItem);
                     listview.setAdapter(adapter);
                 }
-
+                pb.setVisibility(View.INVISIBLE);
                 listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

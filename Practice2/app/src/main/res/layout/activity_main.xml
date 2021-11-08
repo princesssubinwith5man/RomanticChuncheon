@@ -1,50 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
     android:background="@drawable/grad_bg"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".HomeActivity">
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/frameLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
-    <RelativeLayout
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+
+        android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="40dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/nickname"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:onClick="btn_logout"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/user" />
-
-
-
-    </RelativeLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:textColor="#595858"
-        android:text="home"/>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_marginTop="25dp">
 
         <LinearLayout
@@ -777,8 +755,12 @@
 
 
         </LinearLayout>
+=======
+        app:itemBackground="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+>>>>>>> 0ed22a915e4641c85f4c750bc9b961d7ce93ce8a
 
-    </ScrollView>
+        app:menu="@menu/bottom_nav" />
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
