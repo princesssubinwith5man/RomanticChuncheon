@@ -2,6 +2,7 @@ package com.example.practice;
 
 public class Comment {
     String dat;
+    String uid;
     String time;
 
     public Comment() {
@@ -19,6 +20,14 @@ public class Comment {
         this.dat = dat;
     }
 
+    public String getuid() {
+        return uid;
+    }
+
+    public void setuid(String uid) {
+        this.uid = uid;
+    }
+
     public String getTime() {
         return time;
     }
@@ -26,8 +35,9 @@ public class Comment {
     public void setTime(String time) {
         this.time = time;
     }
-    public Comment(String dat, String time){
+    public Comment(String dat,String uid, String time){
         this.dat = dat;
+        this.uid = uid;
         this.time = time;
     }
 

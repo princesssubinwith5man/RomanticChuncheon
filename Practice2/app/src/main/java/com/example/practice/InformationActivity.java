@@ -118,17 +118,16 @@ public class InformationActivity extends AppCompatActivity {
     }
     public void getComment(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
+        //String uid = user.getUid();
         FirebaseDatabase.getInstance().getReference("comment").child(shopNum).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 adapter.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String name = snapshot.getKey();
-                    for(DataSnapshot snapshot1 : snapshot.getChildren()) {
                         HashMap<String,String> item = new HashMap<String, String>();
-                        String temp = snapshot1.child("dat").getValue(String.class);
-                        Log.d("asdfsafd", "onDataChange: " + temp);
+                        String temp = snapshot.child("dat").getValue(String.class);
+                        String name = snapshot.child("uid").getValue(String.class);
+                        Log.d("asdfsafd", "onDataChange: " + temp+" "+name);
                         FirebaseDatabase.getInstance().getReference("name").child(name).child("name").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -144,7 +143,6 @@ public class InformationActivity extends AppCompatActivity {
                             public void onCancelled(@NonNull DatabaseError error) {
                             }
                         });
-                    }
                 }
             }
             @Override
@@ -205,10 +203,10 @@ public class InformationActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String e = user.getUid();
         Log.d("dafsadf", "onComplete: "+dat);
-        Comment comment = new Comment(dat, LocalDateTime.now().toString());
+        Comment comment = new Comment(dat, e ,LocalDateTime.now().toString());
+        Log.d("dafsadf", "onComplete: "+comment);
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("comment").child(shopNum);
-        mDatabase.child(e).push().setValue(comment);
-        mDatabase.child(e).setValue(comment);
+        mDatabase.push().setValue(comment);
         //setListview();
     }
     private void setListview(){
