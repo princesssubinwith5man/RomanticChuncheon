@@ -640,6 +640,7 @@
                     android:layout_weight="1"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="7.5dp"
+
                     android:orientation="vertical"
                     android:gravity="center">
 
@@ -659,7 +660,8 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:onClick="laewon2"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:paddingBottom="30dp">
 
                                 <ImageView
                                     android:layout_width="35dp"
