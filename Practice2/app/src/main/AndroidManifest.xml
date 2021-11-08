@@ -15,14 +15,13 @@
             android:name=".WhoLActivity"
             android:exported="true" />
         <activity
-            android:name=".SearchActivity"
-            android:exported="true" />
-        <activity
             android:name=".HomeActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".SignupActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".MapActivity"
             android:exported="true" />
@@ -35,7 +34,8 @@
             android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

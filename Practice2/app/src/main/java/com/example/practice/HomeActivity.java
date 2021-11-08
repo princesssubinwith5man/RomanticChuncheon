@@ -2,6 +2,8 @@ package com.example.practice;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -27,8 +29,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity {
-    private FirebaseAuth firebaseAuth;
-    TextView tv;
+    private FragmentManager fragmentManager = getSupportFragmentManager();
+    private BlankFragment blankFragment = new BlankFragment();
+    private SearchFragment searchFragment = new SearchFragment();
+    private BoardFragment boardFragment = new BoardFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,112 +41,32 @@ public class HomeActivity extends AppCompatActivity {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE|View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
             getWindow().setStatusBarColor(Color.TRANSPARENT); }
-        // 로그인시 닉네임불러오기
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String e = user.getUid();
-        FirebaseDatabase.getInstance().getReference("name").child(e).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    tv = findViewById(R.id.nickname);
-                    String nick = snapshot.getValue(String.class) + "님 환영합니다.";
-                    tv.setText(nick);
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) { }
-        });
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.frameLayout, blankFragment).commitAllowingStateLoss();
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectedListener());
         // 하단 네비게이션바
-        BottomNavigationView naviView = (BottomNavigationView) findViewById(R.id.bottom_nav);
-        naviView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        // 뭐골랐는지 확인
-                        switch (item.getItemId()) {
-                            case R.id.navi_main:
-                                Toast.makeText(HomeActivity.this, "죽여줘", Toast.LENGTH_LONG).show();
-                                return true;
-                            case R.id.navi_search:
-                                Toast.makeText(HomeActivity.this, "검색해줘", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
-                                startActivity(intent);
-                                return true;
-                            case R.id.navi_board:
-                                Toast.makeText(HomeActivity.this, "게시판가줘", Toast.LENGTH_LONG).show();
-                                return true;
-                        }
-                        return false;
-                    }
-                });
-
     }
-    public void jeonghyeop(View view) {
-        Intent intent = new Intent(HomeActivity.this, ListActivity.class);
-        intent.putExtra("sector","운수업");
-        startActivity(intent);
+    class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener{
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+            switch(menuItem.getItemId())
+            {
+                case R.id.navi_main:
+                    transaction.replace(R.id.frameLayout, blankFragment).commitAllowingStateLoss();
+                    break;
+                case R.id.navi_search:
+                    transaction.replace(R.id.frameLayout, searchFragment).commitAllowingStateLoss();
+                    break;
+                case R.id.navi_board:
+                    transaction.replace(R.id.frameLayout, boardFragment).commitAllowingStateLoss();
+                    break;
+            }
+            return true;
+        }
     }
 
-    public void seungmin(View view) {
-        Intent intent = new Intent(HomeActivity.this, ListActivity.class);
-        intent.putExtra("sector","슈퍼/편의점");
-        startActivity(intent);
-    }
-
-    public void yisak(View view) {
-        Intent intent = new Intent(HomeActivity.this, ListActivity.class);
-        intent.putExtra("sector","주유소");
-        startActivity(intent);
-    }
-
-    public void subin(View view) {
-        Intent intent = new Intent(HomeActivity.this, ListActivity.class);
-        intent.putExtra("sector","도매 및 소매업");
-        startActivity(intent);
-    }
-
-    public void bongkyu(View view) {
-        Intent intent = new Intent(HomeActivity.this, ListActivity.class);
-        intent.putExtra("sector","제조업");
-        startActivity(intent);
-    }
-
-    public void woojin(View view) {
-        Intent intent = new Intent(HomeActivity.this, ListActivity.class);
-        intent.putExtra("sector","출판 등 정보서비스업");
-        startActivity(intent);
-    }
-
-    public void laewon(View view) {
-        //Toast.makeText(getApplicationContext(),"201714198 정래원", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(HomeActivity.this, ListActivity.class);
-        intent.putExtra("sector","숙박 및 음식점");
-        startActivity(intent);
-    }
-
-    public void laewon1(View view) {
-        Intent intent = new Intent(HomeActivity.this, ListActivity.class);
-        intent.putExtra("sector","보건, 사회복지 서비스업");
-        startActivity(intent);
-    }
-
-    public void laewon2(View view) {
-        Intent intent = new Intent(HomeActivity.this, ListActivity.class);
-        intent.putExtra("sector","스포츠 등 기타 서비스업");
-        startActivity(intent);
-    }
-
-    public void laewon3(View view) {
-        Intent intent = new Intent(HomeActivity.this, ListActivity.class);
-        intent.putExtra("sector","기타");
-        startActivity(intent);
-    }
-    public void btn_logout(View view) { // 로그아웃 button11
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-        startActivity(intent);
-    }
-    public void check_name(View view) {
-
-    }
 }
