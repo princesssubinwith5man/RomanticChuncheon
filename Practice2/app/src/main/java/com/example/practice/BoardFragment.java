@@ -102,6 +102,7 @@ public class BoardFragment extends Fragment {
                     String uid = snapshot.child("uid").getValue(String.class);
                     String key = snapshot.getKey();
                     String time =snapshot.child("time").getValue(String.class);
+
                     Log.d("asdf", "onDataChange: " + uid + title + content+"  "+key);
                     FirebaseDatabase.getInstance().getReference("name").child(uid).child("name").addValueEventListener(new ValueEventListener() {
                         @Override

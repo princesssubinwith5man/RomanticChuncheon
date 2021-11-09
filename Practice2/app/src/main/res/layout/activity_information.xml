@@ -11,8 +11,8 @@
         android:id="@+id/rellay1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/information_background"
         android:padding="10dp">
@@ -51,9 +51,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/name"
-            android:textColor="@color/black"
             android:layout_centerHorizontal="true"
             android:text="주소"
+            android:textColor="@color/black"
             android:textSize="13sp"></TextView>
 
         <Button
@@ -62,8 +62,8 @@
             android:layout_below="@+id/name1"
             android:backgroundTint="#66CDAA"
             android:onClick="map"
-            android:textColor="@color/white"
-            android:text="지도 보기"></Button>
+            android:text="지도 보기"
+            android:textColor="@color/white"></Button>
     </RelativeLayout>
 
     <LinearLayout
@@ -87,12 +87,12 @@
                 android:id="@+id/LinearL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/information_background"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -118,6 +118,7 @@
                         android:fontFamily="sans-serif-light"
                         android:text="0"
                         android:textSize="25sp"></TextView>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

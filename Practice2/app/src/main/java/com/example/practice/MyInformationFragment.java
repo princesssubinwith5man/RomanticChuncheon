@@ -1,5 +1,6 @@
 package com.example.practice;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,7 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -17,6 +21,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,19 +77,44 @@ public class MyInformationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_my_information, container, false);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String e = user.getUid();
-        TextView tv = (TextView) v.findViewById(R.id.name22);
+        String id = user.getEmail();
+        long signin = user.getMetadata().getLastSignInTimestamp();
+        Date date = new Date(signin);
+        DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        format.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+        String last_login = format.format(date);
+
+
+        TextView tvname = (TextView) v.findViewById(R.id.name22);
+        TextView tvid = (TextView) v.findViewById(R.id.id_tv);
+        TextView tvlogin = (TextView) v.findViewById(R.id.login_tv);
         FirebaseDatabase.getInstance().getReference("name").child(e).child("name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 name = snapshot.getValue(String.class);
-                tv.setText(name);
+
+                tvname.setText(name);
+                tvid.setText(id);
+                String login_str = "마지막 로그인 시간 : " + last_login;
+                tvlogin.setText(login_str);
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        TextView mylike_bt = v.findViewById(R.id.mylike_tv);
+        mylike_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
             }
         });
