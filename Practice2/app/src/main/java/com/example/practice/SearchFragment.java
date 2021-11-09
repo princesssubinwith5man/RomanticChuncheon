@@ -1,7 +1,9 @@
 package com.example.practice;
 
 import static android.content.ContentValues.TAG;
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -112,7 +115,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        Button button = v.findViewById(R.id.search_btn1);
+       /* Button button = v.findViewById(R.id.search_btn1);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,13 +124,15 @@ public class SearchFragment extends Fragment {
                 if(!s.equals("")) {
                     pb.setVisibility(View.VISIBLE);
                     SearchListview(s);
+
                 }
                 else{
                     Toast.makeText(getActivity(), "not enough search", Toast.LENGTH_LONG).show();
                     Log.d(TAG, "onClick: not enough search");
                 }
+
             }
-        });
+        });*/
         return v;
     }
     public void SearchListview(String s){

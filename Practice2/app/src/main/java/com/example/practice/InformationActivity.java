@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -207,6 +208,9 @@ public class InformationActivity extends AppCompatActivity {
         Log.d("dafsadf", "onComplete: "+comment);
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("comment").child(shopNum);
         mDatabase.push().setValue(comment);
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(cmt.getWindowToken(), 0);
+        cmt.setText("");
         //setListview();
     }
     private void setListview(){

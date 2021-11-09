@@ -19,18 +19,19 @@
             android:orientation="horizontal">
             <SearchView
                 android:id="@+id/search_view"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:iconifiedByDefault="false"
+                android:imeOptions="actionDone"
                 android:queryHint="Search Please"/>
-            <Button
+            <!--<Button
                 android:id="@+id/search_btn1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@drawable/login_button_change"
                 android:textColor="@color/white"
                 android:onClick="search_btn"
-                android:text="검색" />
+                android:text="검색" />-->
         </LinearLayout>
 
         <ListView
