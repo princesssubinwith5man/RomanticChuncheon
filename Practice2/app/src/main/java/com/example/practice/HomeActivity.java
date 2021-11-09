@@ -33,6 +33,7 @@ public class HomeActivity extends AppCompatActivity {
     private BlankFragment blankFragment = new BlankFragment();
     private SearchFragment searchFragment = new SearchFragment();
     private BoardFragment boardFragment = new BoardFragment();
+    private MyInformationFragment myInformationFragment = new MyInformationFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +64,9 @@ public class HomeActivity extends AppCompatActivity {
                     break;
                 case R.id.navi_board:
                     transaction.replace(R.id.frameLayout, boardFragment).commitAllowingStateLoss();
+                    break;
+                case R.id.navi_information:
+                    transaction.replace(R.id.frameLayout, myInformationFragment).commitAllowingStateLoss();
                     break;
             }
             return true;

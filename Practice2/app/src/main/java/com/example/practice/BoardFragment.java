@@ -90,20 +90,7 @@ public class BoardFragment extends Fragment {
         });
         ListView listView = (ListView) v.findViewById(R.id.listView12);
         ListViewAdapter adapter = new ListViewAdapter();
-        /*CollectionReference shopRef = db.collection("content");
-        Query query = shopRef
-                .orderBy("time", Query.Direction.ASCENDING);
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                for (QueryDocumentSnapshot document : task.getResult()) {
 
-                    Board board = document.toObject(Board.class);
-                    adapter.addItem(0, board.title, board.content, board.uid, document.getId());
-                    listView.setAdapter(adapter);
-                }
-            }
-        });*/
         FirebaseDatabase.getInstance().getReference("content").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
