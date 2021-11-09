@@ -95,12 +95,13 @@
                 android:background="@drawable/information_background"
                 android:orientation="horizontal">
 
-                <Button
+                <ImageView
+                    android:id="@+id/like_button"
                     android:layout_width="35dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:background="@drawable/button_change"
-                    android:onClick="like"></Button>
+                    android:onClick="like"></ImageView>
 
                 <LinearLayout
                     android:layout_width="wrap_content"

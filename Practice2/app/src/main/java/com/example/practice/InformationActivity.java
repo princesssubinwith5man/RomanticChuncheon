@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +17,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -113,6 +116,24 @@ public class InformationActivity extends AppCompatActivity {
         cn.setText(centername);
         ad.setText(address);
         likeText.setText(Integer.toString(like));
+        ImageView button = (ImageView) findViewById(R.id.like_button);
+        BitmapDrawable img = (BitmapDrawable)getResources().getDrawable(R.drawable.like1);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        db.collection("like").document(shopNum).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if(document.exists()){
+                        Map<String, Object> map = document.getData();
+                        if(map.containsKey(user.getUid().toString()) && map.get(user.getUid()).toString().equals("true"))
+                            button.setImageDrawable(img);
+                    }
+                }
+            }
+        });
+
         if(check == 0) {
             getComment();
         }
@@ -160,6 +181,8 @@ public class InformationActivity extends AppCompatActivity {
         db.collection("like").document(shopNum).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                ImageView button = (ImageView) findViewById(R.id.like_button);
+                BitmapDrawable img = (BitmapDrawable)getResources().getDrawable(R.drawable.like1);
                 if (task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
@@ -170,6 +193,7 @@ public class InformationActivity extends AppCompatActivity {
                             map.put(user.getUid(), true);
                             db.collection("like").document(shopNum).set(map);
                             db.collection("shop").document(shopNum).update("like", FieldValue.increment(1));
+                            button.setImageDrawable(img);
                         }
                     }
                     else{
@@ -177,6 +201,7 @@ public class InformationActivity extends AppCompatActivity {
                         map.put(user.getUid(), true);
                         db.collection("like").document(shopNum).set(map);
                         db.collection("shop").document(shopNum).update("like", FieldValue.increment(1));
+                        button.setImageDrawable(img);
                     }
                 }
             }
