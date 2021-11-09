@@ -6,10 +6,30 @@
     tools:context=".BoardFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="게시판입니다. 이삭이가 구현예정입니다. 감사합니다."
-        android:gravity="center"/>
+        android:orientation="vertical"
+        android:layout_height="match_parent">
 
+        <ListView
+            android:id="@+id/listView12"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/reg_button"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/btn_bg2"
+            android:text="글 쓰기"
+            android:textColor="@color/white"
+            android:textStyle="italic" />
+
+    </RelativeLayout>
 </FrameLayout>
