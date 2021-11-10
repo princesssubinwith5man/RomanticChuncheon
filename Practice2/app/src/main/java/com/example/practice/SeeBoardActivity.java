@@ -90,7 +90,6 @@ public class SeeBoardActivity extends AppCompatActivity {
                         }
                     });
                 }
-
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
