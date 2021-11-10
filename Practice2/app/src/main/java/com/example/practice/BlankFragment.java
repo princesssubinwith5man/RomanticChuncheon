@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -81,18 +82,19 @@ public class BlankFragment extends Fragment {
         // 로그인시 닉네임불러오기
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String e = user.getUid();
-        FirebaseDatabase.getInstance().getReference("name").child(e).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("name").child(e).child("name").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                     tv = v.findViewById(R.id.nickname);
                     String nick = snapshot.getValue(String.class) + "님 환영합니다.";
                     tv.setText(nick);
-                }
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) { }
         });
+
+
         // button Event Listener (Super/Pyeoneuijeom)
         LinearLayout super1 = v.findViewById(R.id.super1);
         super1.setOnClickListener(new View.OnClickListener() {
