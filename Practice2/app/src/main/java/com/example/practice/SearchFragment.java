@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -26,6 +27,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -34,6 +40,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -137,42 +144,106 @@ public class SearchFragment extends Fragment {
     }
     public void SearchListview(String s){
         ListViewAdapter adapter = new ListViewAdapter();
-        CollectionReference shopRef = db.collection("shop");
-        Query query = shopRef
-                .orderBy("like", Query.Direction.DESCENDING);
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+        DatabaseReference mydb = FirebaseDatabase.getInstance().getReference("shop_name_search");
+        DatabaseReference tmp = mydb.push();
+        tmp.child("name").setValue(s);
+
+
+        tmp.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                for (QueryDocumentSnapshot document : task.getResult()) {
-
-                    Shop shop = document.toObject(Shop.class);
-                    //Log.i("TAG: value is ", shop.name + shop.sector + " : " + temp);
-                    if((shop.name).contains(s)) {
-                        adapter.addItem(0, shop.name, Integer.toString(shop.like), shop.address, document.getId());
-                        listview.setAdapter(adapter);
-                        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                ListViewItem listViewItem = adapter.listViewItemList.get(i);
-                                String centerName = listViewItem.getCenterNameStr();
-                                String address = listViewItem.getAddressStr();
-                                String key = listViewItem.getKey();
-                                String like = listViewItem.getLike();
-
-                                //Toastdd.makeText(getApplicationContext(), "위도 : " + centerName, Toast.LENGTH_LONG).show();
-                                //Log.i("TAG: value is ", centerName + " : " + address);
-                                Intent intent = new Intent(getActivity(), InformationActivity.class);
-                                intent.putExtra("centername", centerName);
-                                intent.putExtra("add", address);
-                                intent.putExtra("key", key);
-                                intent.putExtra("like", like);
-                                startActivity(intent);
-                            }
-                        });
-                    }
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                List<String> nameList = new ArrayList<>();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    nameList.add(dataSnapshot.getValue().toString());
                 }
-                pb.setVisibility(View.INVISIBLE);
+                if(nameList.size()==0)
+                    return;
+                CollectionReference shopRef = db.collection("shop");
+                Query query = shopRef
+                        .orderBy("like", Query.Direction.DESCENDING)
+                        .whereIn("name", nameList);
+
+                query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Shop shop = document.toObject(Shop.class);
+
+                            adapter.addItem(0, shop.name, Integer.toString(shop.like), shop.address, document.getId());
+                            listview.setAdapter(adapter);
+                            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    ListViewItem listViewItem = adapter.listViewItemList.get(i);
+                                    String centerName = listViewItem.getCenterNameStr();
+                                    String address = listViewItem.getAddressStr();
+                                    String key = listViewItem.getKey();
+                                    String like = listViewItem.getLike();
+
+                                    //Toastdd.makeText(getApplicationContext(), "위도 : " + centerName, Toast.LENGTH_LONG).show();
+                                    //Log.i("TAG: value is ", centerName + " : " + address);
+                                    Intent intent = new Intent(getActivity(), InformationActivity.class);
+                                    intent.putExtra("centername", centerName);
+                                    intent.putExtra("add", address);
+                                    intent.putExtra("key", key);
+                                    intent.putExtra("like", like);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
+        tmp.removeEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        tmp.removeValue();
+
+        pb.setVisibility(View.INVISIBLE);
     }
 }
