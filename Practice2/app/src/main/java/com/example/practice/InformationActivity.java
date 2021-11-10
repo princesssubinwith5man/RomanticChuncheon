@@ -176,6 +176,8 @@ public class InformationActivity extends AppCompatActivity {
     public void like(View view) {
         final TextView li = (TextView)findViewById(R.id.likkk);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String e = user.getUid();
+
 
 
         db.collection("like").document(shopNum).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -194,6 +196,7 @@ public class InformationActivity extends AppCompatActivity {
                             db.collection("like").document(shopNum).set(map);
                             db.collection("shop").document(shopNum).update("like", FieldValue.increment(1));
                             button.setImageDrawable(img);
+                            mylike(shopNum);
                         }
                     }
                     else{
@@ -201,7 +204,9 @@ public class InformationActivity extends AppCompatActivity {
                         map.put(user.getUid(), true);
                         db.collection("like").document(shopNum).set(map);
                         db.collection("shop").document(shopNum).update("like", FieldValue.increment(1));
+
                         button.setImageDrawable(img);
+                        mylike(shopNum);
                     }
                 }
             }
@@ -243,4 +248,10 @@ public class InformationActivity extends AppCompatActivity {
         //SimpleAdapter adapter = new SimpleAdapter(this, list1, android.R.layout.simple_list_item_2,new String[]{"item1","item2"}, new int[] {android.R.id.text1, android.R.id.text2});
         //listView.setAdapter(adapter);
     }
+    public void mylike(String shopnum) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        FirebaseDatabase.getInstance().getReference("name").child(uid).child("mylike").child(shopnum).setValue(true);
+    }
 }
+

@@ -1,5 +1,7 @@
 package com.example.practice;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -122,3 +124,4 @@ public class MyInformationFragment extends Fragment {
         return v;
     }
 }
+
