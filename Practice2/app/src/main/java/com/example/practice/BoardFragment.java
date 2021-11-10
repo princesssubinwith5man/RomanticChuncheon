@@ -1,18 +1,26 @@
 package com.example.practice;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.ActionMenuView;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -69,6 +77,7 @@ public class BoardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -80,6 +89,8 @@ public class BoardFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_board, container, false);
+
+
         Button button = (Button) v.findViewById(R.id.reg_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +100,7 @@ public class BoardFragment extends Fragment {
             }
         });
         ListView listView = (ListView) v.findViewById(R.id.listView12);
-        ListViewAdapter adapter = new ListViewAdapter();
+        BoardListViewAdapter adapter = new BoardListViewAdapter();
 
         FirebaseDatabase.getInstance().getReference("content").addValueEventListener(new ValueEventListener() {
             @Override
@@ -108,16 +119,17 @@ public class BoardFragment extends Fragment {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             String name = snapshot.getValue(String.class);
-                            adapter.addItem(0, title, content, name, uid);
+                            adapter.addItem(title, content, name,time,"0", key);
                             listView.setAdapter(adapter);
                             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                    ListViewItem listViewItem = adapter.listViewItemList.get(i);
-                                    String title = listViewItem.getCenterNameStr();
-                                    String name = listViewItem.getAddressStr();
+                                    BoardListViewItem listViewItem = adapter.listViewItemList.get(i);
+                                    String title = listViewItem.getTitle();
+                                    String name = listViewItem.getName();
                                     String key = listViewItem.getKey();
-                                    String content = listViewItem.getLike();
+                                    String content = listViewItem.getContent();
+                                    String Time = listViewItem.getTime();
 
                                     //Toastdd.makeText(getApplicationContext(), "위도 : " + centerName, Toast.LENGTH_LONG).show();
                                     //Log.i("TAG: value is ", centerName + " : " + address);
@@ -126,7 +138,7 @@ public class BoardFragment extends Fragment {
                                     intent.putExtra("name", name);
                                     intent.putExtra("key", key);
                                     intent.putExtra("content", content);
-                                    intent.putExtra("time", time);
+                                    intent.putExtra("time", Time);
                                     startActivity(intent);
                                 }
                             });
@@ -149,4 +161,6 @@ public class BoardFragment extends Fragment {
         });
         return v;
     }
+
+
 }
