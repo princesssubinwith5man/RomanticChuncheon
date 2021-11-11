@@ -57,16 +57,16 @@ public class HomeActivity extends AppCompatActivity {
             switch(menuItem.getItemId())
             {
                 case R.id.navi_main:
-                    transaction.replace(R.id.frameLayout, blankFragment).commitAllowingStateLoss();
+                    transaction.replace(R.id.frameLayout, blankFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE).commitAllowingStateLoss();
                     break;
                 case R.id.navi_search:
-                    transaction.replace(R.id.frameLayout, searchFragment).commitAllowingStateLoss();
+                    transaction.replace(R.id.frameLayout, searchFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE).commitAllowingStateLoss();
                     break;
                 case R.id.navi_board:
-                    transaction.replace(R.id.frameLayout, boardFragment).commitAllowingStateLoss();
+                    transaction.replace(R.id.frameLayout, boardFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE).commitAllowingStateLoss();
                     break;
                 case R.id.navi_information:
-                    transaction.replace(R.id.frameLayout, myInformationFragment).commitAllowingStateLoss();
+                    transaction.replace(R.id.frameLayout, myInformationFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE).commitAllowingStateLoss();
                     break;
             }
             return true;
