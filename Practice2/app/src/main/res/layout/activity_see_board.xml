@@ -72,6 +72,20 @@
             android:layout_height="15dp"
             android:textSize="11sp"
             android:text="0"/>
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:paddingBottom="3dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/comment"/>
+        <TextView
+            android:id="@+id/comment12"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:text="0"></TextView>
     </LinearLayout>
     <ImageView
         android:layout_marginTop="10dp"

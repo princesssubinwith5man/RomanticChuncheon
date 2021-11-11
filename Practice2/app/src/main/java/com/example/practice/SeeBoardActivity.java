@@ -78,10 +78,24 @@ public class SeeBoardActivity extends AppCompatActivity {
         TextView Dtv = (TextView) findViewById(R.id.date_tv);
         TextView Ctv = (TextView) findViewById(R.id.content_tv);
         TextView Ntv = (TextView) findViewById(R.id.name_tv);
+        TextView Cntv = (TextView) findViewById(R.id.comment12);
         Ttv.setText(title);
         Dtv.setText(time);
         Ctv.setText(content);
         Ntv.setText(name);
+        FirebaseDatabase.getInstance().getReference("content").child(key).child("comment").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onDataChange: "+dataSnapshot.getChildrenCount());
+                long cnt = dataSnapshot.getChildrenCount();
+                String s = Long.toString(cnt);
+                Cntv.setText(s);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         getComment();
     }
     public void getComment(){

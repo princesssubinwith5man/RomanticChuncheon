@@ -49,15 +49,29 @@
                 android:layout_weight="0.1"
                 />
             <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/like"/>
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/like"/>
             <TextView
                 android:id="@+id/like"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="40dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"></TextView>
+            <ImageView
+                android:paddingTop="5dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/comment"/>
+            <TextView
+                android:id="@+id/comment"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="35dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"></TextView>
