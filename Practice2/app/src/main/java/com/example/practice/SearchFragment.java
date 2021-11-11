@@ -110,7 +110,7 @@ public class SearchFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 if(!s.equals(""))
-                     pb.setVisibility(View.VISIBLE);
+                    pb.setVisibility(View.VISIBLE);
                     SearchListview(s);
                 return false;
             }
@@ -160,45 +160,42 @@ public class SearchFragment extends Fragment {
                 if(nameList.size()==0)
                     return;
                 CollectionReference shopRef = db.collection("shop");
+                Query query = shopRef
+                        .orderBy("like", Query.Direction.DESCENDING)
+                        .whereIn("name", nameList);
 
-                while(nameList.size()>0) {
-                    int size = Integer.min(10, nameList.size());
-                    Query query = shopRef
-                            .orderBy("like", Query.Direction.DESCENDING)
-                            .whereIn("name", nameList.subList(0, size));
-                    nameList = nameList.subList(size, nameList.size());
+                query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Shop shop = document.toObject(Shop.class);
 
-                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Shop shop = document.toObject(Shop.class);
+                            adapter.addItem(0, shop.name, Integer.toString(shop.like), shop.address, document.getId());
+                            listview.setAdapter(adapter);
+                            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    ListViewItem listViewItem = adapter.listViewItemList.get(i);
+                                    String centerName = listViewItem.getCenterNameStr();
+                                    String address = listViewItem.getAddressStr();
+                                    String key = listViewItem.getKey();
+                                    String like = listViewItem.getLike();
 
-                                adapter.addItem(0, shop.name, Integer.toString(shop.like), shop.address, document.getId());
-                                listview.setAdapter(adapter);
-                                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                        ListViewItem listViewItem = adapter.listViewItemList.get(i);
-                                        String centerName = listViewItem.getCenterNameStr();
-                                        String address = listViewItem.getAddressStr();
-                                        String key = listViewItem.getKey();
-                                        String like = listViewItem.getLike();
-
-                                        //Toastdd.makeText(getApplicationContext(), "위도 : " + centerName, Toast.LENGTH_LONG).show();
-                                        //Log.i("TAG: value is ", centerName + " : " + address);
-                                        Intent intent = new Intent(getActivity(), InformationActivity.class);
-                                        intent.putExtra("centername", centerName);
-                                        intent.putExtra("add", address);
-                                        intent.putExtra("key", key);
-                                        intent.putExtra("like", like);
-                                        startActivity(intent);
-                                    }
-                                });
-                            }
+                                    //Toastdd.makeText(getApplicationContext(), "위도 : " + centerName, Toast.LENGTH_LONG).show();
+                                    //Log.i("TAG: value is ", centerName + " : " + address);
+                                    Intent intent = new Intent(getActivity(), InformationActivity.class);
+                                    intent.putExtra("centername", centerName);
+                                    intent.putExtra("add", address);
+                                    intent.putExtra("key", key);
+                                    intent.putExtra("like", like);
+                                    startActivity(intent);
+                                }
+                            });
                         }
-                    });
-                }
+                        pb.setVisibility(View.INVISIBLE);
+                    }
+                });
+
             }
 
             @Override
