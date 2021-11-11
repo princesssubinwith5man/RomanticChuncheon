@@ -246,5 +246,6 @@ public class SearchFragment extends Fragment {
         });
         tmp.removeValue();
 
+        pb.setVisibility(View.INVISIBLE);
     }
 }

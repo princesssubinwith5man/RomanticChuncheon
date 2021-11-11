@@ -33,7 +33,9 @@ public class Rest{
 
         SearchRequest searchRequest = new SearchRequest("shops");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(query);
+        searchSourceBuilder.query(query)
+                .from(0)
+                .size(200);
         searchRequest.source(searchSourceBuilder);
 
         try{
