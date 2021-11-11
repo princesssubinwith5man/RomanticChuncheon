@@ -16,15 +16,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:background="@color/transparent"
-                android:gravity="center"
-                android:text="광고넣어주세요"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-
             <ListView
                 android:id="@+id/listView12"
                 android:paddingRight="10dp"

@@ -17,6 +17,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,11 +44,26 @@ public class SeeBoardActivity extends AppCompatActivity {
     String key;
     private ListView listView;
     private ArrayAdapter<String> adapter;
+    private AdView mAdView;
     List<Object> Array = new ArrayList<Object>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_board);
+        MobileAds.initialize(this, new OnInitializationCompleteListener() { //광고 초기화
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView); //배너광고 레이아웃 가져오기
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        AdView adView = new AdView(this);
+        adView.setAdSize(AdSize.BANNER); //광고 사이즈는 배너 사이즈로 설정
+        adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
+
+
+
         listView =(ListView)findViewById(R.id.comment123);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, new ArrayList<String>());
         listView.setAdapter(adapter);
