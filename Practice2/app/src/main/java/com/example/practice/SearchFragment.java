@@ -192,8 +192,10 @@ public class SearchFragment extends Fragment {
                                 }
                             });
                         }
+                        pb.setVisibility(View.INVISIBLE);
                     }
                 });
+
             }
 
             @Override
@@ -244,6 +246,5 @@ public class SearchFragment extends Fragment {
         });
         tmp.removeValue();
 
-        pb.setVisibility(View.INVISIBLE);
     }
 }
