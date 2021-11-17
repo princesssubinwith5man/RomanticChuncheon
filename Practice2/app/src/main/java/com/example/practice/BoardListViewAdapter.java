@@ -41,6 +41,7 @@ public class BoardListViewAdapter extends BaseAdapter {
         TextView Content;
         TextView Name;
         TextView like;
+        TextView Comment1;
 
         if(view == null){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -51,6 +52,7 @@ public class BoardListViewAdapter extends BaseAdapter {
         Content = (TextView) view.findViewById(R.id.Content);
         Name = (TextView) view.findViewById(R.id.Name);
         like = (TextView) view.findViewById(R.id.like);
+        Comment1 = (TextView) view.findViewById(R.id.comment1234);
 
         BoardListViewItem listViewItem = listViewItemList.get(i);
 
@@ -58,11 +60,12 @@ public class BoardListViewAdapter extends BaseAdapter {
         Content.setText(listViewItem.getContent());
         Name.setText(listViewItem.getName());
         like.setText(listViewItem.getLike());
+        Comment1.setText(listViewItem.getComment());
 
         return view;
     }
 
-    public void addItem(String Title, String Content, String Name, String Time, String Like, String key){
+    public void addItem(String Title, String Content, String Name, String Time, String Like, String key, String Comment){
         BoardListViewItem item = new BoardListViewItem();
         item.setTitle(Title);
         item.setContent(Content);
@@ -70,6 +73,7 @@ public class BoardListViewAdapter extends BaseAdapter {
         item.setTime(Time);
         item.setKey(key);
         item.setLike(Like);
+        item.setComment(Comment);
         listViewItemList.add(item);
     }
 

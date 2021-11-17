@@ -2,6 +2,7 @@ package com.example.practice;
 
 public class BoardListViewItem {
     private String Like;
+    private String Comment;
     private String Title;
     private String Content;
     private String Name;
@@ -24,7 +25,11 @@ public class BoardListViewItem {
     public void setName(String name) {Name= name;}
     public void setKey(String key){Key = key;}
     public void setTime(String time){Time = time;}
+    public void setComment(String comment){Comment = comment;}
 
+    public String getComment() {
+        return this.Comment;
+    }
     public String getTitle() {
         return this.Title;
     }
