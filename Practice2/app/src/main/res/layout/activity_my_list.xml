@@ -8,16 +8,19 @@
     tools:context=".MyListActivity"
     >
     <TextView
+        android:id="@+id/title_mylist"
         android:layout_marginTop="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="내가 죽이고 싶은 가게 목록"
+        android:text=""
         android:textColor="@color/white"
         android:textStyle="bold"
         android:gravity="center"/>
 
     <ListView
         android:id="@+id/myList"
+        android:padding="10dp"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="45dp" />

@@ -119,10 +119,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:onClick="myreview_click"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:text="내가 써버린 댓글" />
+            android:text="내가 써버린 댓글(가게)" />
 
     </LinearLayout>
 
@@ -131,7 +130,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="350dp"
+        android:layout_marginTop="340dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/information_background"
@@ -161,7 +160,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:onClick="notice_click"
             android:textSize="15sp"
             android:textStyle="bold"
             android:text="공지사항" />
@@ -172,7 +170,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:onClick="settings_click"
             android:textSize="15sp"
             android:textStyle="bold"
             android:text="환경 설정" />
@@ -183,7 +180,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:onClick="version_click"
             android:textSize="15sp"
             android:textStyle="bold"
             android:text="어플리케이션 버전" />
@@ -197,7 +193,6 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:onClick="terms_click"
             android:textSize="15sp"
             android:textStyle="bold"
             android:text="약관 및 정책" />

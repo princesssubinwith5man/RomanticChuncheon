@@ -122,10 +122,34 @@ public class MyInformationFragment extends Fragment {
                 Uid = user.getUid();
                 Intent intent = new Intent(getActivity(), MyListActivity.class);
                 intent.putExtra("uid", Uid);
+                intent.putExtra("id",0);
                 startActivity(intent);
             }
         });
-
+        TextView mypost_bt = v.findViewById(R.id.mypost_tv);
+        mypost_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                Uid = user.getUid();
+                Intent intent = new Intent(getActivity(), MyListActivity.class);
+                intent.putExtra("uid", Uid);
+                intent.putExtra("id",1);
+                startActivity(intent);
+            }
+        });
+        TextView myreview_bt = v.findViewById(R.id.myreview_tv);
+        myreview_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                Uid = user.getUid();
+                Intent intent = new Intent(getActivity(), MyListActivity.class);
+                intent.putExtra("uid", Uid);
+                intent.putExtra("id",2);
+                startActivity(intent);
+            }
+        });
         return v;
     }
 }

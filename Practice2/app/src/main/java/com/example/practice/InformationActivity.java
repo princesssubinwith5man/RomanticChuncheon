@@ -238,6 +238,7 @@ public class InformationActivity extends AppCompatActivity {
         Log.d("dafsadf", "onComplete: "+comment);
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("comment").child(shopNum);
         mDatabase.push().setValue(comment);
+        mycomment(shopNum);
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(cmt.getWindowToken(), 0);
         cmt.setText("");
@@ -252,6 +253,11 @@ public class InformationActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
         FirebaseDatabase.getInstance().getReference("name").child(uid).child("mylike").child(shopnum).setValue(true);
+    }
+    public void mycomment(String shopnum) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        FirebaseDatabase.getInstance().getReference("name").child(uid).child("mycomment").child(shopnum).setValue(true);
     }
 }
 
