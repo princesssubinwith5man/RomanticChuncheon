@@ -7,13 +7,17 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -42,6 +46,7 @@ public class SeeBoardActivity extends AppCompatActivity {
     String time;
     String name;
     String key;
+    int check = 1;
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private AdView mAdView;
@@ -62,7 +67,10 @@ public class SeeBoardActivity extends AppCompatActivity {
         adView.setAdSize(AdSize.BANNER); //광고 사이즈는 배너 사이즈로 설정
         adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
 
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE|View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            getWindow().setStatusBarColor(Color.TRANSPARENT); }
 
         listView =(ListView)findViewById(R.id.comment123);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, new ArrayList<String>());
@@ -79,6 +87,7 @@ public class SeeBoardActivity extends AppCompatActivity {
         TextView Ctv = (TextView) findViewById(R.id.content_tv);
         TextView Ntv = (TextView) findViewById(R.id.name_tv);
         TextView Cntv = (TextView) findViewById(R.id.comment12);
+        TextView Ltv = (TextView) findViewById(R.id.like111);
         Ttv.setText(title);
         Dtv.setText(time);
         Ctv.setText(content);
@@ -96,6 +105,42 @@ public class SeeBoardActivity extends AppCompatActivity {
 
             }
         });
+        FirebaseDatabase.getInstance().getReference("content").child(key).child("like").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onDataChange: "+dataSnapshot.getChildrenCount());
+                long cnt = dataSnapshot.getChildrenCount();
+                String s = Long.toString(cnt);
+                Ltv.setText(s);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("content").child(key).child("like");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String e = user.getUid();
+        ImageView button = (ImageView) findViewById(R.id.like_btn);
+        BitmapDrawable img = (BitmapDrawable)getResources().getDrawable(R.drawable.like1);
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot:dataSnapshot.getChildren()) {
+                    Log.d(TAG, "onDataChange: "+snapshot.child("like").getValue());
+                    if(e.equals(snapshot.child("like").getValue())){
+                        button.setImageDrawable(img);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         getComment();
     }
     public void getComment(){
@@ -148,5 +193,35 @@ public class SeeBoardActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(cmt.getWindowToken(), 0);
         cmt.setText("");
         //setListview();
+    }
+
+    public void like_btn(View view) {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("content").child(key).child("like");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String e = user.getUid();
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot:dataSnapshot.getChildren()) {
+                    Log.d(TAG, "onDataChange: "+snapshot.child("like").getValue());
+                    if(e.equals(snapshot.child("like").getValue())){
+                        check = 0;
+                    }
+                }
+                if(check == 1) {
+                    Like like1 = new Like(e);
+                    mDatabase.push().setValue(like1);
+                }
+                else{
+                    Log.d(TAG, "like_btn: 좋아요는 한번만 돼요");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 }

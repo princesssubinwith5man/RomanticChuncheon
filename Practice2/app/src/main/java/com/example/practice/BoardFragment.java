@@ -119,12 +119,13 @@ public class BoardFragment extends Fragment {
                     String key = snapshot.getKey();
                     String time =snapshot.child("time").getValue(String.class);
                     String comment = Long.toString(snapshot.child("comment").getChildrenCount());
+                    String like = Long.toString(snapshot.child("like").getChildrenCount());
                     Log.d("asdf", "onDataChange: " + uid + title + content+"  "+key+"asdfsfd"+comment);
                     FirebaseDatabase.getInstance().getReference("name").child(uid).child("name").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             String name = snapshot.getValue(String.class);
-                            adapter.addItem(title, content, name,time,"0", key,comment);
+                            adapter.addItem(title, content, name,time,like, key,comment);
                             listView.setAdapter(adapter);
                             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
