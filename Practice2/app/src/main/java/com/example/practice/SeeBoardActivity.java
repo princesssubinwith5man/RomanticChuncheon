@@ -46,7 +46,7 @@ public class SeeBoardActivity extends AppCompatActivity {
     String time;
     String name;
     String key;
-    int check = 1;
+    String KEEY;
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private AdView mAdView;
@@ -124,6 +124,7 @@ public class SeeBoardActivity extends AppCompatActivity {
         String e = user.getUid();
         ImageView button = (ImageView) findViewById(R.id.like_btn);
         BitmapDrawable img = (BitmapDrawable)getResources().getDrawable(R.drawable.like1);
+        BitmapDrawable img1 = (BitmapDrawable)getResources().getDrawable(R.drawable.like);
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -131,7 +132,9 @@ public class SeeBoardActivity extends AppCompatActivity {
                     Log.d(TAG, "onDataChange: "+snapshot.child("like").getValue());
                     if(e.equals(snapshot.child("like").getValue())){
                         button.setImageDrawable(img);
+                        break;
                     }
+                    button.setImageDrawable(img1);
                 }
             }
 
@@ -196,32 +199,48 @@ public class SeeBoardActivity extends AppCompatActivity {
     }
 
     public void like_btn(View view) {
+        check_like();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String e = user.getUid();
+        Log.d(TAG, "like_btn: "+KEEY);
+        if(KEEY!=null){
+            delete(KEEY);
+        }
+        else{
+            Log.d(TAG, "like_btn: 널임");
+            push_like(e);
+        }
+
+    }
+    public void delete(String key1){
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("content").child(key).child("like");
+        mDatabase.child(key1).setValue(null);
+        Log.d(TAG, "Key: "+key1);
+        KEEY = null;
+    }
+    public void push_like(String uid){
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("content").child(key).child("like");
+        Like like1 = new Like(uid);
+        mDatabase.push().setValue(like1);
+    }
+    public void check_like(){
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("content").child(key).child("like");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String e = user.getUid();
+
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot:dataSnapshot.getChildren()) {
-                    Log.d(TAG, "onDataChange: "+snapshot.child("like").getValue());
                     if(e.equals(snapshot.child("like").getValue())){
-                        check = 0;
+                        KEEY = snapshot.getKey();
                     }
                 }
-                if(check == 1) {
-                    Like like1 = new Like(e);
-                    mDatabase.push().setValue(like1);
-                }
-                else{
-                    Log.d(TAG, "like_btn: 좋아요는 한번만 돼요");
-                }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-
     }
 }
