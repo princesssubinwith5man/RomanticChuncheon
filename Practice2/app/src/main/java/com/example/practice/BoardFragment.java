@@ -32,11 +32,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -106,7 +107,8 @@ public class BoardFragment extends Fragment {
         });
         ListView listView = (ListView) v.findViewById(R.id.listView12);
         BoardListViewAdapter adapter = new BoardListViewAdapter();
-
+        //DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("content");
+        //Query a = mDatabase.orderByChild("like");                                             좋아요 순으로 정렬하는 테스트할려고 했으나 폐기
         FirebaseDatabase.getInstance().getReference("content").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -120,7 +122,7 @@ public class BoardFragment extends Fragment {
                     String time =snapshot.child("time").getValue(String.class);
                     String comment = Long.toString(snapshot.child("comment").getChildrenCount());
                     String like = Long.toString(snapshot.child("like").getChildrenCount());
-                    Log.d("asdf", "onDataChange: " + uid + title + content+"  "+key+"asdfsfd"+comment);
+                    //.d("asdf", "onDataChange: " + uid + title + content+"  "+key+"asdfsfd"+comment);
                     FirebaseDatabase.getInstance().getReference("name").child(uid).child("name").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {

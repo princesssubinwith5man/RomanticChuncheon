@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -92,6 +93,7 @@ public class SeeBoardActivity extends AppCompatActivity {
         Dtv.setText(time);
         Ctv.setText(content);
         Ntv.setText(name);
+        check_like();
         FirebaseDatabase.getInstance().getReference("content").child(key).child("comment").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -118,7 +120,6 @@ public class SeeBoardActivity extends AppCompatActivity {
 
             }
         });
-
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("content").child(key).child("like");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String e = user.getUid();
@@ -199,14 +200,28 @@ public class SeeBoardActivity extends AppCompatActivity {
     }
 
     public void like_btn(View view) {
-        check_like();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("content").child(key).child("like");
+
+        ImageView button = (ImageView) findViewById(R.id.like_btn);
+        BitmapDrawable img = (BitmapDrawable)getResources().getDrawable(R.drawable.like1);
+        BitmapDrawable img1 = (BitmapDrawable)getResources().getDrawable(R.drawable.like);
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                check_like();
+            }
+        },1000);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String e = user.getUid();
         Log.d(TAG, "like_btn: "+KEEY);
         if(KEEY!=null){
+            button.setImageDrawable(img1);
             delete(KEEY);
         }
         else{
+            button.setImageDrawable(img);
             Log.d(TAG, "like_btn: 널임");
             push_like(e);
         }
