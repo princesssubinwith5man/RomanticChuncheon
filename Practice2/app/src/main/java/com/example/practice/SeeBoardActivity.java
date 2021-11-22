@@ -68,11 +68,6 @@ public class SeeBoardActivity extends AppCompatActivity {
         adView.setAdSize(AdSize.BANNER); //광고 사이즈는 배너 사이즈로 설정
         adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE|View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-            getWindow().setStatusBarColor(Color.TRANSPARENT); }
-
         listView =(ListView)findViewById(R.id.comment123);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, new ArrayList<String>());
         listView.setAdapter(adapter);

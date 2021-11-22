@@ -2,55 +2,78 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <TextView
 
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:text="글 쓰기"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            />
+
+        <Button
+            android:id="@+id/reg_button"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_gravity="right"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/btn_bg2"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:onClick="write"
+            android:text="완료"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:src="@drawable/line"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="제목"/>
+        android:padding="16dp"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/title_et"
             android:padding="16dp"
-            android:background="#eeeeee"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="제목을 입력하세요."
+            android:hint="제목"
+            android:textStyle="bold"
             />
+        <EditText
+            android:id="@+id/content_et"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="내용을 입력하세요."
+            android:textSize="15sp"
+            android:background="@color/transparent"
+            />
+
     </LinearLayout>
-
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="내용"/>
-
-    <EditText
-        android:id="@+id/content_et"
-        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="25dp"
         android:layout_weight="1"
-        android:background="#eeeeee"
-        android:hint="내용을 입력하세요."
-        />
+        android:gravity="bottom"
+        android:text="누구나 기분 좋게 참여할 수 있는 커뮤니티를 만들기 위해 커뮤니티 이용규칙을 제정하여 운영하고 있습니다. 위반 시 게시물이 삭제되고 서비스 이용이 일정기간 제한될 수 있습니다."/>
 
-    <Button
-        android:id="@+id/reg_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="등록하기"
-        android:textColor="#FFFFFF"
-        android:onClick="write"
-        android:background="#C62828"/>
 
 
 </LinearLayout>
